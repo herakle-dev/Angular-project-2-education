@@ -1,0 +1,43 @@
+.g-blue {
+  color: #4285f4;
+}
+.o-red {
+  color: #db4437;
+}
+.o-yellow {
+  color: #f4b400;
+}
+.l-green {
+  color: #0f9d58;
+}
+.e-red {
+  display: inline-block;
+  transform: rotate(-20deg);
+}
+
+.fakeLogo {
+  margin-top: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.big-logo{
+font-family: 'Product Sans', sans-serif;
+font-size: 50px;
+}
+.form-container{
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+mat-form-field{
+  margin-right: 5px;
+}
+.search-button{
+  margin-bottom: 15px;
+}
+.alert{
+  margin-top: 5px;
+}
