@@ -4,8 +4,9 @@ import { MainPageComponent } from './core/main-page/main-page.component';
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 
 const routes: Routes = [
-  {path:'', component:SearchBarComponent, children :[
-    {path:':selectedOption.value/:textInput.value', component:MainPageComponent}]}
+
+  {path:':selectedOption.value/:textInput.value', component:MainPageComponent}
+
 ];
 
 @NgModule({

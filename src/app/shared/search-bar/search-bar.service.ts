@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, ViewChild, OnInit } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { FormControl, NgForm, Validators } from '@angular/forms';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SearchBarService   {
-  constructor(private http: HttpClient) {}
+export class SearchBarService {
+  constructor(private http: HttpClient) {
+    this.limit = 0;
+  }
   //base url
   public openLibraryURL = `https://openlibrary.org`;
   //url created sooner
@@ -19,68 +21,44 @@ export class SearchBarService   {
   @ViewChild('searchForm', { static: false }) searchForm!: NgForm;
   textInput = new FormControl('');
   selectedOption = new FormControl('');
-
+  limit: number = 50;
+  offset: number = 0;
   //array
-  responseArray! : any[];
+  responseArray!: any[];
 
   //taking input value
   search() {
     this.textParam = this.textInput.value;
     this.selectParam = this.selectedOption.value;
-    this.URLmaker(this.selectParam, this.textParam);
+    this.URLmaker(this.selectParam, this.textParam, this.limit, this.offset);
     return this.textParam, this.selectParam;
   }
-  URLmaker(text: any, param: string | null) {
+
+  URLmaker(text: any, param: string | null, limit: number, offset: number) {
     text = this.textParam;
     param = this.selectParam;
-    //creating url based on select & text input
+    // Creazione dell'URL basato sulla selezione e l'input di testo
     if (param === 'subject') {
       text = text.trim().toLowerCase();
-      this.apiUrl = `${this.openLibraryURL}/subjects/${text}.json?limit=50`;
+      this.apiUrl = `${this.openLibraryURL}/subjects/${text}.json?limit=${limit}&offset=${offset}`;
     } else if (param === 'title') {
-      this.apiUrl = `${this.openLibraryURL}/search.json?title=${text}&limit=50`;
+      this.apiUrl = `${this.openLibraryURL}/search.json?title=${text}&limit=${limit}&offset=${offset}`;
     } else if (param === 'author') {
-      this.apiUrl = `${this.openLibraryURL}/search.json?author=${text}&limit=50`;
+      this.apiUrl = `${this.openLibraryURL}/search.json?author=${text}&limit=${limit}&offset=${offset}`;
     }
-    this.fetchThingsfromAPI(this.apiUrl);
   }
-
-  fetchThingsfromAPI(apiURL: string) {
+//simple function to get the num to iterate for pagination
+  fetchThingsfromAPI(apiURL: string): Observable<any> {
     apiURL = this.apiUrl;
-    this.http.get<any>(`${apiURL}.json`).subscribe((response) => {
-      if (response.works) {
-        console.log(response.works.length)
-        this.responseArray = response.works;
-      } else if (response.docs) {
-        this.responseArray = response.docs;
-      } else {
-        this.responseArray = [];
-      }
-      console.log( this.responseArray);
-
-    });
+    return this.http.get<any>(`${apiURL}`);
   }
 
+  fetchResultsWithOffset(
+    text: any,
+    limit: number,
+    offset: number
+  ): Observable<any> {
+    console.log(this.apiUrl);
+    return this.http.get(this.apiUrl);
+  }
 }
-// const authorResponse = [
-//   'docs [{}]',
-//   'numFound : number',
-//   'numFoundExact : bool',
-//   'offset null',
-//   'q ""',
-//   'start 0',
-// ];
-// const titleResponse = [
-//   'docs [{}]',
-//   'numFound : number',
-//   'numFoundExact : bool',
-//   'offset null',
-//   'q ""',
-//   'start 0',
-// ];
-// const subjectResponse = [
-//   'Key: /subjects/fantasy',
-//   'Name: fantasy',
-//   ' Subject Type: subject',
-//   ' Work Count: 13133',
-// ];

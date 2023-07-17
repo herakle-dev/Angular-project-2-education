@@ -5,11 +5,12 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainPageComponent } from '../core/main-page/main-page.component';
 import { RouterModule } from '@angular/router';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
 @NgModule({
-  declarations: [SearchBarComponent,MainPageComponent],
+  declarations: [SearchBarComponent,MainPageComponent, PaginationComponent],
   imports: [
     CommonModule,
     UiKitModule,

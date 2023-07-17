@@ -1,11 +1,68 @@
-
-<div *ngFor="let item of responseArray; let i = index">
-  <div class="card">
-    <h3>Index: {{ i }}</h3>
-    <p>Key: {{ item.key }}</p>
-    <p>Title: {{ item.title }}</p>
-    <!-- Aggiungi altre proprietà da visualizzare nella card -->
+<div *ngFor="let book of responseArray ; let i = index">
+  <h2>{{responseArray.length}} totale trovati</h2>
+  <div class="card" *ngIf="selectedOption.value === 'subject'">
+    <div class="card-header">
+      <h4 class="card-title">{{ book.title }}</h4>
+    </div>
+    <div class="card-body">
+      <div class="card-info">
+        <!-- <p><strong>Availability:</strong> {{ book.availability.status }}</p> -->
+        <p><strong>Cover Edition Key:</strong> {{ book.cover_edition_key }}</p>
+        <p><strong>Edition Count:</strong> {{ book.edition_count }}</p>
+        <p><strong>First Publish Year:</strong> {{ book.first_publish_year }}</p>
+        <p><strong>Has Fulltext:</strong> {{ book.has_fulltext }}</p>
+        <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "subjects" -->
+      </div>
+      <div class="card-subjects">
+        <p><strong>Subjects:</strong></p>
+        <ul>
+          <li *ngFor="let subject of book.subject">{{ subject }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <div class="card" *ngIf="selectedOption.value === 'title'">
+    <div class="card-header">
+      <h4 class="card-title">{{ book.title }}</h4>
+    </div>
+    <div class="card-body">
+      <div class="card-info">
+        <p><strong>Author Name:</strong> {{ book.author_name }}</p>
+        <p><strong>First Publish Year:</strong> {{ book.first_publish_year }}</p>
+        <!-- <p><strong>Language:</strong> {{ book.language.join(', ') }}</p> -->
+        <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "title" -->
+      </div>
+      <div class="card-subjects">
+        <p><strong>Subjects:</strong></p>
+        <ul>
+          <li *ngFor="let subject of book.subject">{{ subject }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="selectedOption.value === 'author'">
+    <div class="card-header">
+      <h4 class="card-title">{{ book.title }}</h4>
+    </div>
+    <div class="card-body">
+      <div class="card-info">
+        <p><strong>Author Name:</strong> {{ book.author_name }}</p>
+        <p><strong>First Publish Year:</strong> {{ book.first_publish_year }}</p>
+        <!-- <p><strong>Language:</strong> {{ book.language.join(', ') }}</p> -->
+        <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "author" -->
+      </div>
+      <div class="card-subjects">
+        <p><strong>Subjects:</strong></p>
+        <ul>
+          <li *ngFor="let subject of book.subject">{{ subject }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 

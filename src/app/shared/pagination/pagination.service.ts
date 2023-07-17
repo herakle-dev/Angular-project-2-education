@@ -1,0 +1,66 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PaginationService {
+
+  constructor() {
+     this.currentPage = 0;
+    this.totalPages = 0; }
+  public currentPage: number;
+  private totalPages: number;
+
+  setTotalPages(totalResults: number, limit: number) {
+    this.totalPages = Math.ceil(totalResults / limit);
+  }
+
+  getCurrentPage(): number {
+    return this.currentPage;
+  }
+
+  getTotalPages(): number {
+    return this.totalPages;
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+  }
+
+  goToNextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+    }
+  }
+
+  goToPreviousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+    }
+  }
+
+  goToFirstPage() {
+    this.currentPage = 0;
+  }
+
+  goToLastPage() {
+    this.currentPage = this.totalPages - 1;
+  }
+
+  isFirstPage(): boolean {
+    return this.currentPage === 0;
+  }
+
+  isLastPage(): boolean {
+    return this.currentPage === this.totalPages - 1;
+  }
+
+  isCurrentPage(page: number): boolean {
+    return this.currentPage === page;
+  }
+
+  getPageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i);
+  }
+
+}
