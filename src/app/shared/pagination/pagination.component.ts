@@ -1,5 +1,5 @@
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationService } from './pagination.service';
 
 @Component({
@@ -14,6 +14,8 @@ export class PaginationComponent {
   ) {}
   @Output() pageChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   responseArray: any[] = [];
+  @Input()searchvar!:boolean
+
   paginationResultsWithParams(offset: number) {
     this.searchBarService.offset = offset;
     this.searchBarService.URLmaker(

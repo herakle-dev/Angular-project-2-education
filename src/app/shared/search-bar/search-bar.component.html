@@ -31,8 +31,8 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Inserisci il limite</mat-label>
-      <input matInput type="number" name="limitInput" [(ngModel)]="limit" required (change)="getLimitValue(limit)">
+      <mat-label>Quanti risultati vuoi per pagina?</mat-label>
+      <input matInput type="number" min="1" max="1000" name="limitInput" [(ngModel)]="limit" required (change)="getLimitValue(limit)">
       <!-- <mat-hint *ngIf="!limit && limit.touched" class="alert alert-danger" role="alert">Il campo è obbligatorio</mat-hint> -->
     </mat-form-field>
 
@@ -42,6 +42,7 @@
     </button>
   </form>
 </div>
-<app-pagination (pageChange)="fetchPaginatedResults($event)" ></app-pagination>
-<app-main-page [responseArray]=" paginatedResults" [selectedOption]="this.selectedOption"></app-main-page>
+<app-pagination (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
+<app-main-page [responseArray]=" paginatedResults" [selectedOption]="this.selectedOption" ></app-main-page>
+<app-pagination (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
 

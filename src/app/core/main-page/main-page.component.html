@@ -1,5 +1,4 @@
 <div *ngFor="let book of responseArray ; let i = index">
-  <h2>{{responseArray.length}} totale trovati</h2>
   <div class="card" *ngIf="selectedOption.value === 'subject'">
     <div class="card-header">
       <h4 class="card-title">{{ book.title }}</h4>
@@ -14,10 +13,10 @@
         <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "subjects" -->
       </div>
       <div class="card-subjects">
-        <p><strong>Subjects:</strong></p>
+        <!-- <p><strong>Subjects:</strong></p>
         <ul>
           <li *ngFor="let subject of book.subject">{{ subject }}</li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
@@ -34,10 +33,10 @@
         <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "title" -->
       </div>
       <div class="card-subjects">
-        <p><strong>Subjects:</strong></p>
+        <!-- <p><strong>Subjects:</strong></p>
         <ul>
           <li *ngFor="let subject of book.subject">{{ subject }}</li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
@@ -54,10 +53,10 @@
         <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "author" -->
       </div>
       <div class="card-subjects">
-        <p><strong>Subjects:</strong></p>
+        <!-- <p><strong>Subjects:</strong></p>
         <ul>
           <li *ngFor="let subject of book.subject">{{ subject }}</li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>

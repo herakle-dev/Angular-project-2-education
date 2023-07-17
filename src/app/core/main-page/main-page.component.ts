@@ -11,5 +11,4 @@ export class MainPageComponent {
   @Input() responseArray!: any[];
   constructor(private ChangeDetectorRef:ChangeDetectorRef,private searchService:SearchBarService) {}
 @Input()  selectedOption:any
-
 }

@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
+import {MatSliderModule} from '@angular/material/slider';
+
 const components=[
   FormsModule,
    ReactiveFormsModule,
@@ -19,7 +21,8 @@ const components=[
    HttpClientModule,
    MatProgressBarModule,
    MatDividerModule,
-   MatCardModule
+   MatCardModule,
+   MatSliderModule
 
 ]
 

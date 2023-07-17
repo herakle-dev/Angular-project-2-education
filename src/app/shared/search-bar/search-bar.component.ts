@@ -13,12 +13,16 @@ export class SearchBarComponent {
     private paginationService:PaginationService
   ) {}
 
-  textInput = this.searchBarService.textInput;
- @Input() selectedOption = this.searchBarService.selectedOption;
-  limit=this.searchBarService.limit
+  selectedOption = this.searchBarService.selectedOption;
   @Input() responseArray: any;
-  paginatedResults!: any[];
   @Input()paginatedArray!:any[]
+
+  limit=this.searchBarService.limit
+  paginatedResults!: any[];
+  textInput = this.searchBarService.textInput;
+
+@Input()searchvar=false
+
 
   //method for pagination component to emit new results every page
   fetchPaginatedResults(results: any[]) {
@@ -44,6 +48,7 @@ export class SearchBarComponent {
         } else {
           this.responseArray = [];
         }
+        this.searchvar=true
 
       });
     return  this.paginatedResults = this.searchBarService.responseArray
@@ -55,6 +60,11 @@ export class SearchBarComponent {
   }
 
   getLimitValue(num:number):number{
+    console.log(num)
+    if (num > 1000) {
+      num = 1000;
+    }
+    this.limit = num;
    return this.searchBarService.limit = this.limit;
   }
 
