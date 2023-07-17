@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 
 @Component({
@@ -9,6 +8,6 @@ import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 })
 export class MainPageComponent {
   @Input() responseArray!: any[];
-  constructor(private ChangeDetectorRef:ChangeDetectorRef,private searchService:SearchBarService) {}
+  constructor(private searchService:SearchBarService) {}
 @Input()  selectedOption:any
 }

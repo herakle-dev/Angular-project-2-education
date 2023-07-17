@@ -1,5 +1,5 @@
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { PaginationService } from './pagination.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { PaginationService } from './pagination.service';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit{
   constructor(
     private paginationService: PaginationService,
     private searchBarService: SearchBarService
@@ -15,7 +15,8 @@ export class PaginationComponent {
   @Output() pageChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   responseArray: any[] = [];
   @Input()searchvar!:boolean
-
+  ngOnInit(): void {
+  }
   paginationResultsWithParams(offset: number) {
     this.searchBarService.offset = offset;
     this.searchBarService.URLmaker(

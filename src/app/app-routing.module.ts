@@ -4,8 +4,10 @@ import { MainPageComponent } from './core/main-page/main-page.component';
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 
 const routes: Routes = [
+{path:'', redirectTo:'home', pathMatch:'full'},
+  {path:'home', component:SearchBarComponent},
+  { path: 'search/:param/:text/:page', component: SearchBarComponent },
 
-  {path:':selectedOption.value/:textInput.value', component:MainPageComponent}
 
 ];
 

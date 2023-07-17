@@ -1,14 +1,18 @@
+import { PaginationService } from './../pagination/pagination.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, ViewChild, OnInit } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchBarService {
-  constructor(private http: HttpClient) {
-    this.limit = 0;
+  constructor(private http: HttpClient,
+    private paginationService:PaginationService,
+    private router:Router) {
+    this.limit = 50;
   }
   //base url
   public openLibraryURL = `https://openlibrary.org`;
@@ -28,9 +32,11 @@ export class SearchBarService {
 
   //taking input value
   search() {
+
     this.textParam = this.textInput.value;
     this.selectParam = this.selectedOption.value;
     this.URLmaker(this.selectParam, this.textParam, this.limit, this.offset);
+
     return this.textParam, this.selectParam;
   }
 
@@ -50,6 +56,9 @@ export class SearchBarService {
 //simple function to get the num to iterate for pagination
   fetchThingsfromAPI(apiURL: string): Observable<any> {
     apiURL = this.apiUrl;
+    const url = `search/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
+    this.router.navigate([url])
+    console.log(url)
     return this.http.get<any>(`${apiURL}`);
   }
 
@@ -58,7 +67,11 @@ export class SearchBarService {
     limit: number,
     offset: number
   ): Observable<any> {
-    console.log(this.apiUrl);
+    // console.log(this.apiUrl);
+    const url = `search/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
+    this.router.navigate([url])
+
+    console.log(url)
     return this.http.get(this.apiUrl);
   }
 }

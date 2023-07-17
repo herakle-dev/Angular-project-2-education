@@ -1,16 +1,18 @@
 import { PaginationService } from '../pagination/pagination.service';
 import { SearchBarService } from './search-bar.service';
-import {  Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit {
   constructor(
     private searchBarService: SearchBarService,
-    private paginationService:PaginationService
+    private paginationService:PaginationService,
+    private router: Router
   ) {}
 
   selectedOption = this.searchBarService.selectedOption;
@@ -23,15 +25,32 @@ export class SearchBarComponent {
 
 @Input()searchvar=false
 
-
+ngOnInit(): void {
+  this.searchBarService.offset=  this.searchBarService.offset
+  this.paginationService.currentPage=this.paginationService.currentPage
+  console.log('initttttt', this.searchvar,this.searchBarService.offset,
+  this.paginationService.currentPage)
+}
   //method for pagination component to emit new results every page
   fetchPaginatedResults(results: any[]) {
     this.paginatedResults = results
   }
 
   search() {
+     console.log('searc', this.searchvar,this.searchBarService.offset,
+     this.paginationService.currentPage)
+    if(this.searchvar=true){
+    this.searchBarService.offset=0
+    this.paginationService.currentPage=0
+    console.log('IF', this.searchvar,this.searchBarService.offset,
+    this.paginationService.currentPage)
+  }
     //getting params
     this.searchBarService.search();
+
+
+
+
     //subscribe api
     this.searchBarService
       .fetchThingsfromAPI(this.searchBarService.apiUrl)
@@ -69,12 +88,12 @@ export class SearchBarComponent {
   }
 
   /*
-costruire url in base ai param inseriti dall utente ==> che porta alla lista dopo aver cercato
- --difficile forse bisogna capire se e come fare le richieste quando già si è in un url di ricerca
-dalla lista al singolo => url /nomecoso per mostrare tutti i risultati
-get ricorsiva per ottenere tutti i libri con quei parametri,
-LIMITE PER GET ==> 1000
-parametro numerico per scegliere quanti risultati si vogliono per pagina
+-------costruire url in base ai param inseriti dall utente ==> che porta alla lista dopo aver cercato
+ --+++------------difficile forse bisogna capire se e come fare le richieste quando già si è in un url di ricerca
+----------dalla lista al singolo => url /nomecoso per mostrare tutti i risultati
+--------------get ricorsiva per ottenere tutti i libri con quei parametri,
+---------LIMITE PER GET ==> 1000
+------------  parametro numerico per scegliere quanti risultati si vogliono per pagina
 sfruttare le api al massimo riguardo le api search in modo da dare una ricerca ottima
 si può usare il parametro ===> search?q=language%3Aita per dare la lingua dei libri da cercare
 si possono mettere in chain con altri
