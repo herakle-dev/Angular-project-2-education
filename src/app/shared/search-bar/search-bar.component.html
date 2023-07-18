@@ -1,5 +1,5 @@
 <div class="fakeLogo">
- <a routerLink=""> <h1>
+ <a routerLink="" (click)="reset()"> <h1>
     <strong class="big-logo"
       ><span
         ><span class="g-blue">Op</span> <span class="o-red">en</span
@@ -33,7 +33,6 @@
     <mat-form-field>
       <mat-label>Quanti risultati vuoi per pagina?</mat-label>
       <input matInput type="number" min="1" max="1000" name="limitInput" [(ngModel)]="limit" required (change)="getLimitValue(limit)">
-      <!-- <mat-hint *ngIf="!limit && limit.touched" class="alert alert-danger" role="alert">Il campo è obbligatorio</mat-hint> -->
     </mat-form-field>
 
 
@@ -42,6 +41,9 @@
     </button>
   </form>
 </div>
+
+
+
 <app-pagination (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
 <app-main-page [responseArray]=" paginatedResults" [selectedOption]="this.selectedOption" ></app-main-page>
 <app-pagination (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>

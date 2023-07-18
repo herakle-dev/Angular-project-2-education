@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 
 @Component({
@@ -7,7 +8,15 @@ import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent {
-  @Input() responseArray!: any[];
-  constructor(private searchService:SearchBarService) {}
+
+  constructor(public searchBarService:SearchBarService,private router:Router) {}
 @Input()  selectedOption:any
+@Input() responseArray!: any[];
+@Input()paginatedResults: any[] = [];
+
+goDetails(key:string, title:string){
+
+  this.router.navigate(['details',key,title])
+}
+
 }

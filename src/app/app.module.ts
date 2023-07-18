@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { MainPageComponent } from './core/main-page/main-page.component';
 import { SharedModule } from "./shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ItemDetailsComponent } from './core/item-details/item-details.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
+        ItemDetailsComponent,
 
     ],
     providers: [],

@@ -31,13 +31,13 @@ export class SearchBarService {
   responseArray!: any[];
 
   //taking input value
-  search() {
+ async search() {
 
     this.textParam = this.textInput.value;
     this.selectParam = this.selectedOption.value;
     this.URLmaker(this.selectParam, this.textParam, this.limit, this.offset);
 
-    return this.textParam, this.selectParam;
+    return (this.textParam, this.selectParam);
   }
 
   URLmaker(text: any, param: string | null, limit: number, offset: number) {

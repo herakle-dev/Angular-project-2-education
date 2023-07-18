@@ -11,80 +11,83 @@ import { Router } from '@angular/router';
 export class SearchBarComponent implements OnInit {
   constructor(
     private searchBarService: SearchBarService,
-    private paginationService:PaginationService,
+    private paginationService: PaginationService,
     private router: Router
   ) {}
 
   selectedOption = this.searchBarService.selectedOption;
   @Input() responseArray: any;
-  @Input()paginatedArray!:any[]
+  @Input() paginatedArray!: any[];
 
-  limit=this.searchBarService.limit
+  limit = this.searchBarService.limit;
   paginatedResults!: any[];
   textInput = this.searchBarService.textInput;
 
-@Input()searchvar=false
+  @Input() searchvar = false;
 
-ngOnInit(): void {
-  this.searchBarService.offset=  this.searchBarService.offset
-  this.paginationService.currentPage=this.paginationService.currentPage
-  console.log('initttttt', this.searchvar,this.searchBarService.offset,
-  this.paginationService.currentPage)
-}
+  ngOnInit(): void {
+    this.searchBarService.offset = this.searchBarService.offset;
+    this.paginationService.currentPage = this.paginationService.currentPage;
+
+  }
+
+  reset() {
+    this.textInput.reset();
+    this.selectedOption.reset();
+    this.limit = this.searchBarService.limit;
+    this.paginatedResults = [];
+    this.searchvar = false;
+  }
   //method for pagination component to emit new results every page
   fetchPaginatedResults(results: any[]) {
-    this.paginatedResults = results
+    this.paginatedResults = results;
   }
 
   search() {
-     console.log('searc', this.searchvar,this.searchBarService.offset,
-     this.paginationService.currentPage)
-    if(this.searchvar=true){
-    this.searchBarService.offset=0
-    this.paginationService.currentPage=0
-    console.log('IF', this.searchvar,this.searchBarService.offset,
-    this.paginationService.currentPage)
-  }
-    //getting params
-    this.searchBarService.search();
+    console.log(this.paginatedResults)
+    if (this.searchvar) {
+      this.searchBarService.offset = 0;
+      this.paginationService.currentPage = 0;
+    }
+    console.log(this.paginatedResults)
+    // Ottieni i parametri di ricerca dal servizio
+    const apiUrl = this.searchBarService.apiUrl;
+    const searchParams = this.searchBarService.search();
 
-
-
-
-    //subscribe api
-    this.searchBarService
-      .fetchThingsfromAPI(this.searchBarService.apiUrl)
+    // Effettua la chiamata API con i parametri di ricerca
+    this.searchBarService.fetchThingsfromAPI(apiUrl)
       .subscribe((response) => {
         if (response.works) {
-          this.paginatedResults = response.works;
           const workCount = response.work_count;
           this.paginationService.setTotalPages(workCount, this.limit);
+          this.paginatedResults = response.works;
+
+          console.log(this.paginatedResults)
+
         } else if (response.docs) {
-          this.paginatedResults = response.docs;
           const workCount = response.work_count || response.numFound;
           this.paginationService.setTotalPages(workCount, this.limit);
+          this.paginatedResults = response.docs;
 
-        } else {
-          this.responseArray = [];
+          console.log(this.paginatedResults)
+
         }
-        this.searchvar=true
-
+        this.searchvar = true;
       });
-    return  this.paginatedResults = this.searchBarService.responseArray
-
-
   }
+
+
+
   select(selectedOption: any) {
     selectedOption = this.searchBarService.selectedOption.value;
   }
 
-  getLimitValue(num:number):number{
-    console.log(num)
+  getLimitValue(num: number): number {
     if (num > 1000) {
       num = 1000;
     }
     this.limit = num;
-   return this.searchBarService.limit = this.limit;
+    return (this.searchBarService.limit = this.limit);
   }
 
   /*
@@ -138,6 +141,4 @@ publisher:harper will looks for any books published by a publisher with "harper"
 
 
 */
-
-
 }
