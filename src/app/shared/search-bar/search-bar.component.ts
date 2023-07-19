@@ -15,22 +15,43 @@ export class SearchBarComponent implements OnInit {
     private router: Router
   ) {}
 
-  selectedOption = this.searchBarService.selectedOption;
   @Input() responseArray: any;
   @Input() paginatedArray!: any[];
 
   limit = this.searchBarService.limit;
   paginatedResults!: any[];
+  selectedOption = this.searchBarService.selectedOption;
   textInput = this.searchBarService.textInput;
+  selectedFlag=this.searchBarService.langParam
 
   @Input() searchvar = false;
 
+
+  //FLAG SELECTION
+  flags: any[] = [
+    { name: 'Inglese', value: '', icon: 'fi fi-gb' },
+    { name: 'Italiano', value: 'ita', icon: 'fi fi-it' },
+    { name: 'Francese', value: 'fre', icon: 'fi fi-fr' },
+    { name: 'Spagnolo', value: 'spa', icon: 'fi fi-es' },
+    { name: 'Tedesco', value: 'ger', icon: 'fi fi-de' },
+    { name: 'Russo', value: 'rus', icon: 'fi fi-ru' },
+
+  ];
+
+  onLanguageChange(value: string) {
+    this.searchBarService.languageInput.patchValue(value);
+  }
+
+  onParamselect(selectedOption: any) {
+    selectedOption = this.searchBarService.selectedOption.value;
+  }
+  //INIT
   ngOnInit(): void {
     this.searchBarService.offset = this.searchBarService.offset;
     this.paginationService.currentPage = this.paginationService.currentPage;
 
   }
-
+//RESET
   reset() {
     this.textInput.reset();
     this.selectedOption.reset();
@@ -44,12 +65,12 @@ export class SearchBarComponent implements OnInit {
   }
 
   search() {
-    console.log(this.paginatedResults)
+    // console.log(this.paginatedResults)
     if (this.searchvar) {
       this.searchBarService.offset = 0;
       this.paginationService.currentPage = 0;
     }
-    console.log(this.paginatedResults)
+    // console.log(this.paginatedResults)
     // Ottieni i parametri di ricerca dal servizio
     const apiUrl = this.searchBarService.apiUrl;
     const searchParams = this.searchBarService.search();
@@ -62,14 +83,14 @@ export class SearchBarComponent implements OnInit {
           this.paginationService.setTotalPages(workCount, this.limit);
           this.paginatedResults = response.works;
 
-          console.log(this.paginatedResults)
+          // console.log(this.paginatedResults)
 
         } else if (response.docs) {
           const workCount = response.work_count || response.numFound;
           this.paginationService.setTotalPages(workCount, this.limit);
           this.paginatedResults = response.docs;
 
-          console.log(this.paginatedResults)
+          // console.log(this.paginatedResults)
 
         }
         this.searchvar = true;
@@ -78,9 +99,7 @@ export class SearchBarComponent implements OnInit {
 
 
 
-  select(selectedOption: any) {
-    selectedOption = this.searchBarService.selectedOption.value;
-  }
+
 
   getLimitValue(num: number): number {
     if (num > 1000) {
@@ -97,14 +116,17 @@ export class SearchBarComponent implements OnInit {
 --------------get ricorsiva per ottenere tutti i libri con quei parametri,
 ---------LIMITE PER GET ==> 1000
 ------------  parametro numerico per scegliere quanti risultati si vogliono per pagina
+
+
+
 sfruttare le api al massimo riguardo le api search in modo da dare una ricerca ottima
 si può usare il parametro ===> search?q=language%3Aita per dare la lingua dei libri da cercare
 si possono mettere in chain con altri
 ===> /search?q=language%3Aita&place=italy&subject=travel
 
 router dinamico in base ai param
-corretta visualizzazione
-scoprire se è possibile aggiungere parametri di ricerca in modo da impaginare i risultati
+------------corretta visualizzazione
+DA FARE ALMENO LA LINGUA scoprire se è possibile aggiungere parametri di ricerca in modo da impaginare i risultati
 
 
 

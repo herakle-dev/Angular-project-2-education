@@ -23,7 +23,9 @@ export class PaginationComponent implements OnInit{
       this.searchBarService.selectParam,
       this.searchBarService.textParam,
       this.searchBarService.limit,
-      this.searchBarService.offset
+      this.searchBarService.offset,
+      this.searchBarService.langParam
+
     )
    this.searchBarService.fetchResultsWithOffset(
     this.searchBarService.textParam,

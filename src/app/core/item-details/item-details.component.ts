@@ -13,7 +13,7 @@ export class ItemDetailsComponent {
     console.log('details')
     this.route.params.subscribe(params => {
       const key = params['key'];
-      const title = params['title'];
+      let title = params['title'];
       // Utilizza i valori di 'key' e 'title' come desideri nel componente
     });
 }

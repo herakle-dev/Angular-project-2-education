@@ -15,16 +15,16 @@
 <div class="form-container">
   <form #searchForm="ngForm" (ngSubmit)="search()">
     <mat-form-field>
-      <mat-label>Scrivi qui</mat-label>
+      <mat-label>Cosa vuoi cercare?</mat-label>
       <input matInput  name="textInput" [formControl]="textInput" placeholder="Autore, categoria, titolo" required>
       <mat-hint *ngIf="!textInput.valid && textInput.touched" class="alert alert-danger" role="alert">Il campo è obbligatorio</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Scegli un parametro</mat-label>
-      <mat-select [formControl]="selectedOption" name="selectedOption" required (selectionChange)="select(selectedOption.value)">
+      <mat-select [formControl]="selectedOption" name="selectedOption" required (selectionChange)="onParamselect(selectedOption.value)">
         <mat-option value="author">Autore</mat-option>
         <mat-option value="title">Titolo</mat-option>
-        <mat-option value="subject">Categoria</mat-option>
+        <mat-option value="subject">Argomento</mat-option>
       </mat-select>
       <mat-hint *ngIf="!selectedOption.valid && selectedOption.touched " class="alert alert-danger" role="alert">Il parametro è obbligatorio</mat-hint>
 
@@ -34,6 +34,23 @@
       <mat-label>Quanti risultati vuoi per pagina?</mat-label>
       <input matInput type="number" min="1" max="1000" name="limitInput" [(ngModel)]="limit" required (change)="getLimitValue(limit)">
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Seleziona una lingua</mat-label>
+      <mat-select (selectionChange)="onLanguageChange($event.value)">
+        <mat-option *ngFor="let flag of flags" [value]="flag.value">
+          <span class="flag-icon {{ flag.icon }}"></span>
+          {{ flag.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+
+
+
+
 
 
     <button mat-raised-button color="accent" class="search-button"  type="submit" [disabled]="!textInput.dirty || !selectedOption.dirty ">

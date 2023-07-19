@@ -21,10 +21,13 @@ export class SearchBarService {
   //input
   textParam!: string | null;
   selectParam!: string | null;
+  langParam!:string|null;
   //form
   @ViewChild('searchForm', { static: false }) searchForm!: NgForm;
   textInput = new FormControl('');
   selectedOption = new FormControl('');
+  languageInput = new FormControl('');
+
   limit: number = 50;
   offset: number = 0;
   //array
@@ -35,30 +38,34 @@ export class SearchBarService {
 
     this.textParam = this.textInput.value;
     this.selectParam = this.selectedOption.value;
-    this.URLmaker(this.selectParam, this.textParam, this.limit, this.offset);
+this.langParam=this.languageInput.value
+    this.URLmaker(this.selectParam, this.textParam, this.limit, this.offset,this.langParam);
 
     return (this.textParam, this.selectParam);
   }
 
-  URLmaker(text: any, param: string | null, limit: number, offset: number) {
+  URLmaker(text: any, param: string | null, limit: number, offset: number,language:string|null) {
     text = this.textParam;
     param = this.selectParam;
+    language=this.langParam
     // Creazione dell'URL basato sulla selezione e l'input di testo
     if (param === 'subject') {
       text = text.trim().toLowerCase();
-      this.apiUrl = `${this.openLibraryURL}/subjects/${text}.json?limit=${limit}&offset=${offset}`;
+      this.apiUrl = `${this.openLibraryURL}/subjects/${text}.json?q=language:${language}&limit=${limit}&offset=${offset}`;
     } else if (param === 'title') {
-      this.apiUrl = `${this.openLibraryURL}/search.json?title=${text}&limit=${limit}&offset=${offset}`;
+      this.apiUrl = `${this.openLibraryURL}/search.json?title=${text}&q=language:${language}&limit=${limit}&offset=${offset}`;
     } else if (param === 'author') {
-      this.apiUrl = `${this.openLibraryURL}/search.json?author=${text}&limit=${limit}&offset=${offset}`;
+      this.apiUrl = `${this.openLibraryURL}/search.json?author=${text}&q=language:${language}&limit=${limit}&offset=${offset}`;
     }
+
+
   }
 //simple function to get the num to iterate for pagination
   fetchThingsfromAPI(apiURL: string): Observable<any> {
     apiURL = this.apiUrl;
-    const url = `search/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
+    const url = `search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
     this.router.navigate([url])
-    console.log(url)
+    // console.log(url)
     return this.http.get<any>(`${apiURL}`);
   }
 
@@ -71,7 +78,7 @@ export class SearchBarService {
     const url = `search/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
     this.router.navigate([url])
 
-    console.log(url)
+    // console.log(url)
     return this.http.get(this.apiUrl);
   }
 }

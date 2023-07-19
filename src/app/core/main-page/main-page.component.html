@@ -3,7 +3,7 @@
 <div *ngFor="let book of responseArray ; let i = index">
   <div class="card" *ngIf="selectedOption.value === 'subject'">
     <div class="card-header">
-      <h4 class="card-title" (click)="goDetails(book.key,book.title)">{{ book.title }}</h4>
+      <h4 class="card-title" (click)="goDetails(book.title)">{{ book.title }}</h4>
     </div>
     <div class="card-body">
       <div class="card-info">
@@ -26,7 +26,7 @@
 
   <div class="card" *ngIf="selectedOption.value === 'title'">
     <div class="card-header">
-      <h4 class="card-title" (click)="goDetails(book.key,book.title)">{{ book.title }}</h4>
+      <h4 class="card-title" (click)="goDetails(book.title)">{{ book.title }}</h4>
     </div>
     <div class="card-body">
       <div class="card-info">
@@ -48,7 +48,7 @@
 
   <div class="card" *ngIf="selectedOption.value === 'author'">
     <div class="card-header">
-      <h4 class="card-title" (click)="goDetails(book.key,book.title)">{{ book.title }}</h4>
+      <h4 class="card-title" (click)="goDetails(book.title)">{{ book.title }}</h4>
     </div>
     <div class="card-body">
       <div class="card-info">
