@@ -1,93 +1,31 @@
 
+<div class="container fit-card">
+  <div class="row row-cols-3">
+    <div *ngFor="let book of this.searchBarService.getResponseArr(); let i = index">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" (click)="this.itemDetailService.goDetails(book.title,book.key)">{{ book.title }}</h5>
 
-<div *ngFor="let book of responseArray ; let i = index">
-  <div class="card" *ngIf="selectedOption.value === 'subject'">
-    <div class="card-header">
-      <h4 class="card-title" (click)="goDetails(book.title)">{{ book.title }}</h4>
-    </div>
-    <div class="card-body">
-      <div class="card-info">
-        <p ><strong>Key:</strong> {{ book.key }}</p>
-        <p><strong>Cover Edition Key:</strong> {{ book.cover_edition_key }}</p>
-        <p><strong>Edition Count:</strong> {{ book.edition_count }}</p>
-        <p><strong>First Publish Year:</strong> {{ book.first_publish_year }}</p>
-        <p><strong>Has Fulltext:</strong> {{ book.has_fulltext }}</p>
-      </div>
-      <div class="card-subjects">
-
-
-        <!-- <p><strong>Subjects:</strong></p>
-        <ul>
-          <li *ngFor="let subject of book.subject">{{ subject }}</li>
-        </ul> -->
-      </div>
-    </div>
-  </div>
-
-  <div class="card" *ngIf="selectedOption.value === 'title'">
-    <div class="card-header">
-      <h4 class="card-title" (click)="goDetails(book.title)">{{ book.title }}</h4>
-    </div>
-    <div class="card-body">
-      <div class="card-info">
-        <p><strong>Key:</strong> {{ book.key }}</p>
-
-        <p><strong>Author Name:</strong> {{ book.author_name }}</p>
-        <p><strong>First Publish Year:</strong> {{ book.first_publish_year }}</p>
-        <!-- <p><strong>Language:</strong> {{ book.language.join(', ') }}</p> -->
-        <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "title" -->
-      </div>
-      <div class="card-subjects">
-        <!-- <p><strong>Subjects:</strong></p>
-        <ul>
-          <li *ngFor="let subject of book.subject">{{ subject }}</li>
-        </ul> -->
+          <img
+            class="card-img-top"
+            src="https://covers.openlibrary.org/b/id/{{
+              selectedOption.value === 'subject' ? book.cover_id : book.cover_i
+            }}.jpg"
+            alt="Cover"
+          />
+          <p class="card-text">
+            Autore :
+            {{
+              selectedOption.value === "subject"
+                ? book.authors[0].name
+                : book.author_name
+            }}
+          </p>
+          <p class="card-text">
+            Anno di pubblicazione : {{ book.first_publish_year }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="card" *ngIf="selectedOption.value === 'author'">
-    <div class="card-header">
-      <h4 class="card-title" (click)="goDetails(book.title)">{{ book.title }}</h4>
-    </div>
-    <div class="card-body">
-      <div class="card-info">
-        <p><strong>Key:</strong> {{ book.key }}</p>
-
-        <p><strong>Author Name:</strong> {{ book.author_name }}</p>
-        <p><strong>First Publish Year:</strong> {{ book.first_publish_year }}</p>
-        <!-- <p><strong>Language:</strong> {{ book.language.join(', ') }}</p> -->
-        <!-- Aggiungi altre proprietà da visualizzare nella card per il parametro "author" -->
-      </div>
-      <div class="card-subjects">
-        <!-- <p><strong>Subjects:</strong></p>
-        <ul>
-          <li *ngFor="let subject of book.subject">{{ subject }}</li>
-        </ul> -->
-      </div>
-    </div>
-  </div>
-
-
 </div>
-
-
-
-<!-- <mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-subtitle>{{response}}</mat-card-subtitle>
-    <mat-card-title>Shiba Inu</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>This card has divider and indeterminate progress as footer</p>
-    <p>{{ response }}</p>
-    <mat-divider></mat-divider>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-  <mat-card-footer>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </mat-card-footer>
-</mat-card> -->

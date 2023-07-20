@@ -7,11 +7,18 @@ import { HomeTrendingComponent } from './core/home-trending/home-trending.compon
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeTrendingComponent },
-  { path: 'search/:lang/:param/:text/:page', component: MainPageComponent },
-{path:'details/:title', component:ItemDetailsComponent}
+  {
+    path: 'home',
+    component: SearchBarComponent,
+    children: [
+      { path: '', component: HomeTrendingComponent },
+      { path: 'search/:/:param/:text/:page ', component: MainPageComponent },
+      { path: 'details/:title', component: ItemDetailsComponent }
+    ]
+  },
 
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

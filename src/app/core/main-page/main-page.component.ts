@@ -1,6 +1,8 @@
-import { Component, Input, OnInit, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
+import { ItemDetailsService } from '../item-details/item-details.service';
+import { PaginationService } from 'src/app/shared/pagination/pagination.service';
+import { MainPageService } from './main-page.service';
 
 @Component({
   selector: 'app-main-page',
@@ -8,20 +10,17 @@ import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent {
+  constructor(
+    public searchBarService: SearchBarService,
+    public itemDetailService: ItemDetailsService,
+    public paginationService: PaginationService,
+    public mainPageService: MainPageService
+  ) {}
+  @Input() selectedOption = this.searchBarService.selectedOption;
+  paginatedResults: any[] = [];
 
-  constructor(public searchBarService:SearchBarService,private router:Router) {}
-@Input()  selectedOption:any
-@Input() responseArray!: any[];
-paginatedResults: any[] = [];
-
-goDetails( title:string){
-  title = title.replace(/\s/g, '_');
-  // console.log(key)
-  // key = key.replace(/\//g, '_');
-  // console.log(key)
-
-   this.router.navigate(['details',title])
-
- }
-
+  fetchPaginatedResults(results: any[]) {
+    this.paginatedResults = results;
+    console.log(results);
+  }
 }

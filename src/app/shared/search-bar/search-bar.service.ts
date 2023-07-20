@@ -1,7 +1,7 @@
 import { PaginationService } from './../pagination/pagination.service';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, ViewChild, OnInit } from '@angular/core';
-import { FormControl, NgForm, Validators } from '@angular/forms';
+import { Injectable, ViewChild } from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 
@@ -32,7 +32,7 @@ export class SearchBarService {
   offset: number = 0;
   //array
   responseArray!: any[];
-
+  searchvar=false
   //taking input value
  async search() {
 
@@ -63,9 +63,9 @@ this.langParam=this.languageInput.value
 //simple function to get the num to iterate for pagination
   fetchThingsfromAPI(apiURL: string): Observable<any> {
     apiURL = this.apiUrl;
-    const url = `search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
+    const url = `home/search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
     this.router.navigate([url])
-    // console.log(url)
+    console.log(url)
     return this.http.get<any>(`${apiURL}`);
   }
 
@@ -75,10 +75,19 @@ this.langParam=this.languageInput.value
     offset: number
   ): Observable<any> {
     // console.log(this.apiUrl);
-    const url = `search/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
+    const url = `home/search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
     this.router.navigate([url])
 
-    // console.log(url)
+   console.log(url)
     return this.http.get(this.apiUrl);
   }
+
+
+  setArrayToShow(array:any){
+    this.responseArray =array
+  }
+  getResponseArr(){
+    return this.responseArray
+  }
 }
+/*FARE SUBSCRIBE ALLA GET DI QUESTO SERVICE*/

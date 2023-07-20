@@ -6,16 +6,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainPageComponent } from '../core/main-page/main-page.component';
 import { RouterModule } from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ItemDetailsComponent } from '../core/item-details/item-details.component';
+import { HomeTrendingComponent } from '../core/home-trending/home-trending.component';
 
 
 
 @NgModule({
-  declarations: [SearchBarComponent,MainPageComponent, PaginationComponent],
+  declarations: [SearchBarComponent,MainPageComponent, PaginationComponent,        ItemDetailsComponent,
+    HomeTrendingComponent,],
   imports: [
     CommonModule,
     UiKitModule,
 RouterModule
   ],
-  exports:[SearchBarComponent,MainPageComponent]
+  exports:[SearchBarComponent,MainPageComponent,        ItemDetailsComponent,
+    HomeTrendingComponent,]
 })
 export class SharedModule { }

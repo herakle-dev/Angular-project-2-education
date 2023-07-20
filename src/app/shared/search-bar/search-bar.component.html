@@ -37,12 +37,14 @@
 
     <mat-form-field>
       <mat-label>Seleziona una lingua</mat-label>
-      <mat-select (selectionChange)="onLanguageChange($event.value)">
-        <mat-option *ngFor="let flag of flags" [value]="flag.value">
+      <mat-select (selectionChange)="onLanguageChange($event.value)" value="">
+
+        <mat-option *ngFor="let flag of flags" [value]="flag.value" >
           <span class="flag-icon {{ flag.icon }}"></span>
-          {{ flag.name }}
-        </mat-option>
-      </mat-select>
+        <span> {{ flag.name }}</span>
+        </mat-option >
+      </mat-select
+      >
     </mat-form-field>
 
 
@@ -61,7 +63,7 @@
 
 
 
-<app-pagination (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
-<app-main-page [responseArray]=" paginatedResults" [selectedOption]="this.selectedOption" ></app-main-page>
-<app-pagination (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
+<app-pagination  (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
+<router-outlet ></router-outlet>
+<app-pagination   (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
 

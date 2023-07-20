@@ -14,8 +14,8 @@ import { HomeTrendingComponent } from './core/home-trending/home-trending.compon
 @NgModule({
     declarations: [
         AppComponent,
-        ItemDetailsComponent,
-        HomeTrendingComponent,
+
+
 
     ],
     providers: [],
@@ -26,6 +26,7 @@ import { HomeTrendingComponent } from './core/home-trending/home-trending.compon
         SharedModule,
         UiKitModule,
         BrowserAnimationsModule,
+
     ]
 })
 export class AppModule { }
