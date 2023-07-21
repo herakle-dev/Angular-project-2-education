@@ -31,12 +31,20 @@ ngOnInit(): void {
   getItemDetails(): Observable<any> {
     return this.http.get(`${this.url}${this.getKey()}.json`)
   }
-  goDetails(title: string, key: string) {
-    title = title.replace(/\s/g, '_');
+  goDetails(title: string | string[], key: string) {
+    if (typeof title === 'string') {
+      title = title.replace(/\s/g, '_');
+    } else if (Array.isArray(title)) {
+      console.log(title, 'premap')
+
+      title = title .map((item) => item.replace(/\s/g, '_'));
+      console.log(title,'postmap')
+    }
+
     this.setKey(key);
     const url =`home/details/${title}`
     this.router.navigate([url]);
-console.log(url)
+// console.log(url)
 
   }
 }

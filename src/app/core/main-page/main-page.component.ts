@@ -21,6 +21,7 @@ export class MainPageComponent {
 
   fetchPaginatedResults(results: any[]) {
     this.paginatedResults = results;
-    console.log(results);
+    // console.log(results);
   }
+
 }

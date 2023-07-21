@@ -66,7 +66,7 @@ export class SearchBarComponent implements OnInit {
         this.paginationService.setTotalPages(workCount, this.limit);
         this.paginatedResults = response.docs;
       }
-      console.log(this.paginatedResults);
+      // console.log(this.paginatedResults);
       this.searchBarService.setArrayToShow(this.paginatedResults);
       this.searchvar = true;
     });

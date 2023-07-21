@@ -1,10 +1,16 @@
-
 <div class="container fit-card">
-  <div class="row row-cols-3">
-    <div *ngFor="let book of this.searchBarService.getResponseArr(); let i = index">
+  <div class="row row-cols-5">
+    <div
+      *ngFor="let book of this.searchBarService.getResponseArr(); let i = index"
+    >
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title" (click)="this.itemDetailService.goDetails(book.title,book.key)">{{ book.title }}</h5>
+          <h5
+            class="card-title"
+            (click)="this.itemDetailService.goDetails(book.title, book.key)"
+          >
+            {{ book.title }}
+          </h5>
 
           <img
             class="card-img-top"
@@ -13,13 +19,28 @@
             }}.jpg"
             alt="Cover"
           />
-          <p class="card-text">
-            Autore :
-            {{
-              selectedOption.value === "subject"
+
+          <p
+            class="card-text"
+            (click)="
+              this.itemDetailService.goDetails(
+                selectedOption.value === 'subject'
                 ? book.authors[0].name
-                : book.author_name
-            }}
+                : book.author_name[0],
+                selectedOption.value === 'subject'
+                  ? book.authors[0].key
+                  : '/authors/'+ book.author_key[0]
+              );
+
+            "
+          >
+            Autore :<em class="card-title">
+              {{
+                selectedOption.value === "subject"
+                  ? book.authors[0].name
+                  : book.author_name
+              }}</em
+            >
           </p>
           <p class="card-text">
             Anno di pubblicazione : {{ book.first_publish_year }}

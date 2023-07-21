@@ -78,7 +78,7 @@ this.langParam=this.languageInput.value
     const url = `home/search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
     this.router.navigate([url])
 
-   console.log(url)
+  //  console.log(url)
     return this.http.get(this.apiUrl);
   }
 
