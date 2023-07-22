@@ -1,19 +1,19 @@
 <div class="container" *ngIf="searchvar" >
   <div class="row">
 <div class="pagination">
-  <button class="btn btn-primary btn-lg" (click)="goToFirstPage()" [disabled]="isFirstPage()">&#171;</button>
-  <button class="btn btn-success btn-lg" (click)="goToPreviousPage()" [disabled]="isFirstPage()">&#8249;</button>
+  <button class="btn  btn-lg" (click)="goToFirstPage()" [disabled]="isFirstPage()">&#171;</button>
+  <button class="btn btn-lg" (click)="goToPreviousPage()" [disabled]="isFirstPage()">&#8249;</button>
 
 
     <li *ngFor="let page of getPageNumbers()">
-      <button class="btn btn-dark btn-lg" (click)="goToPage(page)" [disabled]="isCurrentPage(page)">
+      <button class="btn btn-lg" (click)="goToPage(page)" [disabled]="isCurrentPage(page)">
         {{ page+1 }}
       </button>
     </li>
 
 
-  <button  class="btn btn-success btn-lg"(click)="goToNextPage()" [disabled]="isLastPage()">&#8250;</button>
-  <button class="btn btn-primary btn-lg" (click)="goToLastPage()" [disabled]="isLastPage() || this.paginationService.totalPages === 1">&#187;</button>
+  <button  class="btn  btn-lg"(click)="goToNextPage()" [disabled]="isLastPage()">&#8250;</button>
+  <button class="btn btn-lg" (click)="goToLastPage()" [disabled]="isLastPage() || this.paginationService.totalPages === 1">&#187;</button>
 </div>
 </div>
 </div>

@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HomeTrendingService } from './home-trending.service';
 import { ItemDetailsService } from '../item-details/item-details.service';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home-trending',
@@ -9,13 +10,15 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./home-trending.component.css'],
 })
 export class HomeTrendingComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
+
   constructor(
     private homeService: HomeTrendingService,
     public itemDetailsService: ItemDetailsService
   ) {}
+
   time: string = 'now';
   itemResponseByTime: any[] = [];
-  private ngUnsubscribe = new Subject<void>();
 
   ngOnInit(): void {
     this.trending();
@@ -27,13 +30,17 @@ export class HomeTrendingComponent implements OnInit, OnDestroy {
   }
 
   trending() {
+    // Annulla le richieste correnti prima di fare una nuova richiesta
+    this.homeService.cancelRequests();
+
     this.homeService.fetchTrending(this.time)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response) => {
-      this.itemResponseByTime = response.works;
-      // console.log(response);
-    });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response) => {
+        this.itemResponseByTime = response.works;
+        // console.log(response);
+      });
   }
+
   onItemClick(value: string) {
     this.time = value;
     this.trending();

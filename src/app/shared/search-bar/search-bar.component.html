@@ -11,7 +11,7 @@
       >
     </h1></a
   >
-  <small style="margin-top: 10px">2.0</small>
+  <strong style="margin-top: 10px">2.0</strong>
 </div>
 
 <div class="form-container">
@@ -78,11 +78,13 @@
 
     <button
       mat-raised-button
-      color="accent"
+      color="primary"
       class="search-button"
       type="submit"
+
       [disabled]="!textInput.dirty || !selectedOption.dirty"
-    >
+    >  <mat-icon class="material-icons">search</mat-icon>
+
       Cerca
     </button>
   </form>

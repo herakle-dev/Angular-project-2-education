@@ -10,6 +10,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
 
 const components=[
   FormsModule,
@@ -22,7 +23,8 @@ const components=[
    MatProgressBarModule,
    MatDividerModule,
    MatCardModule,
-   MatSliderModule
+   MatSliderModule,
+   MatIconModule
 
 ]
 

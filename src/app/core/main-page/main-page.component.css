@@ -1,99 +1,105 @@
-.container {
-  text-align: center;
-}
-
-h2 {
-  margin-bottom: 20px;
-}
-.fit-card{
-  display: flex;
-
-}
-
-ul {
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-}
-
-li {
-  margin: 0 10px;
-}
-.container {
-  display: flex;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.card-container {
+/* Stile per il container delle card */
+.container.fit-card {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
+  margin: 20px auto;
+  max-width: 1200px;
 }
 
+/* Stile per le card */
 .card {
-  margin: 5px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  width: 250px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.card-content {
-  margin-top: 10px;
-}
-
-h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-p {
-  margin: 5px 0;
-  font-size: 14px;
-}
-
-.card {
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-img-top {
   width: auto;
-  height: 300px;
-  object-fit: cover;
-}
-
-.card-title {
-  margin-bottom: 10;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.card-title:hover{
-  color:blue;
+  height: auto;
+  margin: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
   cursor: pointer;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
-.card-text {
-  font-size: 14px;
-}
-
 
 .card:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease-in-out;
-  z-index: auto
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f0f0f0;
 }
+
+/* Stile per l'immagine della card */
+.card-img-top {
+  height: 372.5px;
+  width: 249.5px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* Stile per il contenuto della card */
+.card-body {
+  padding: 10px;
+}
+
+/* Stile per il titolo della card */
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Stile per il testo della card */
+.card-text {
+  font-size: 14px;
+  color: #666;
+  flex-grow: 1;
+}
+
+/* Stile per il link dell'autore */
+.card-text a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.card-text a:hover {
+  text-decoration: underline;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: center; /* Centra il testo */
+  transition: color 0.3s ease; /* Transizione al passaggio del mouse */
+}
+
+.card-title:hover {
+  color: #007bff; /* Cambia il colore al passaggio del mouse */
+}
+
+/* Stile per il testo della card */
+.card-text {
+  font-size: 14px;
+  color: #666;
+  flex-grow: 1;
+  text-align: center; /* Centra il testo */
+  transition: color 0.3s ease; /* Transizione al passaggio del mouse */
+}
+
+.card-title:hover {
+  color: #007bff; /* Cambia il colore al passaggio del mouse */
+}
+
+
+/* Stile per la data di pubblicazione */
+.card-date {
+  font-size: 12px;
+  color: #999;
+  margin-top: auto;
+  text-align: right; /* Allinea a destra */
+  padding: 5px; /* Aggiungi spazio intorno alla data */
+}
+
+/* Stile per la data di pubblicazione al passaggio del mouse */
+

@@ -1,7 +1,85 @@
-.container{
+/* Stili per la paginazione */
+.container {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
-button{
+
+button {
+  font-size: 18px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #000000; /* Colore del testo */
+  transition: background-color 0.3s ease;
+}
+
+/* Stili per i bottoni "Precedente" e "Successivo" */
+button.prev,
+button.next {
+  background-color: #007bff;
+}
+
+/* Stili per i bottoni "Primo" e "Ultimo" */
+button.first,
+button.last {
+  background-color: #28a745;
+}
+
+/* Stili per i bottoni numerici */
+button.number {
+  background-color: #6c757d;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.active {
+  background-color: #dc3545;
+}
+
+.pagination li {
+  list-style: none;
+  display: inline-block;
   margin-right: 5px;
+}
+
+.pagination li button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.pagination li button:hover {
+  text-decoration: underline;
+}
+
+/* Aggiornamento del colore di testo per i bottoni di paginazione personalizzati */
+.button-pagination {
+  background-color: #ffffff; /* Colore di sfondo */
+  color: #000000; /* Colore del testo */
+  border: none;
+  padding: 8px 16px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+/* Stile per il bottone attivo/selezionato */
+.button-pagination.active {
+  background-color: #cccccc; /* Colore di sfondo del bottone attivo */
+  color: #ffffff; /* Colore del testo del bottone attivo */
+}
+
+/* Stile per il bottone disabilitato */
+.button-pagination.disabled {
+  background-color: #cccccc; /* Colore di sfondo del bottone disabilitato */
+  color: #999999; /* Colore del testo del bottone disabilitato */
+  cursor: not-allowed;
 }

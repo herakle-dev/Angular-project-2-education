@@ -1,19 +1,19 @@
 <div class="container fit-card">
-  <div class="row row-cols-5">
+  <div class="row row-cols-4">
     <div
       *ngFor="let book of this.searchBarService.getResponseArr(); let i = index"
     >
       <div class="card">
         <div class="card-body">
           <h5
-            class="card-title"
+            class="card-title bookTitle"
             (click)="this.itemDetailService.goDetails(book.title, book.key)"
           >
             {{ book.title }}
           </h5>
 
           <img
-            class="card-img-top"
+            class="card-img-top bookCover"
             src="https://covers.openlibrary.org/b/id/{{
               this.searchBarService.selectParam === 'subject' ? book.cover_id : book.cover_i
             }}.jpg"
@@ -42,8 +42,8 @@
               }}</em
             >
           </p>
-          <p class="card-text">
-            Anno di pubblicazione : {{ book.first_publish_year }}
+          <p class="card-text ">
+            Anno di pubblicazione : <span class="card-date">{{ book.first_publish_year }}</span>
           </p>
         </div>
       </div>
