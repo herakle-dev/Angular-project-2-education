@@ -19,7 +19,6 @@ export class SearchBarComponent implements OnInit {
   @Input() responseArray: any;
   // var used to show/hide things
   @Input() searchvar = this.searchBarService.searchvar;
-
   limit = this.searchBarService.limit;
   selectedOption = this.searchBarService.selectedOption;
   textInput = this.searchBarService.textInput;
@@ -52,18 +51,27 @@ export class SearchBarComponent implements OnInit {
     }
     // Ottieni i parametri di ricerca dal servizio
     const apiUrl = this.searchBarService.apiUrl;
-    const searchParams = this.searchBarService.search();
+    this.searchBarService.search();
 
     // Effettua la chiamata API con i parametri di ricerca
     this.searchBarService.fetchThingsfromAPI(apiUrl).subscribe((response) => {
       if (response.works) {
         const workCount = response.work_count;
-        this.paginationService.setTotalPages(workCount, this.limit);
+        if(workCount<=this.limit){
+          this.paginationService.setTotalPages(workCount-1, this.limit);
+        }else {
+                  this.paginationService.setTotalPages(workCount, this.limit);
+
+        }
         this.paginatedResults = response.works;
 
       } else if (response.docs) {
         const workCount = response.work_count || response.numFound;
+        if(workCount<=this.limit){
+          this.paginationService.setTotalPages(workCount-1, this.limit);
+        }else {
         this.paginationService.setTotalPages(workCount, this.limit);
+        }
         this.paginatedResults = response.docs;
       }
       // console.log(this.paginatedResults);
@@ -99,3 +107,6 @@ export class SearchBarComponent implements OnInit {
   ];
 
 }
+/*
+limit  100
+offset 0 + 1 +2 +3 */

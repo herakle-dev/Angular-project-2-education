@@ -9,7 +9,7 @@ import { PaginationService } from './pagination.service';
 })
 export class PaginationComponent {
   constructor(
-    private paginationService: PaginationService,
+    public paginationService: PaginationService,
     private searchBarService: SearchBarService
   ) {}
   @Output() pageChange: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -17,7 +17,7 @@ export class PaginationComponent {
   @Input()searchvar!:boolean
 
   paginationResultsWithParams(offset: number) {
-    this.searchBarService.offset = offset;
+    this.searchBarService.offset = offset * this.searchBarService.limit;
     this.searchBarService.URLmaker(
       this.searchBarService.selectParam,
       this.searchBarService.textParam,
@@ -29,7 +29,7 @@ export class PaginationComponent {
    this.searchBarService.fetchResultsWithOffset(
     this.searchBarService.textParam,
     this.searchBarService.limit,
-    this.searchBarService.offset
+    this.searchBarService.offset * this.searchBarService.limit
    )
       .subscribe((results) => {
         this.responseArray = results.works || results.docs ;
@@ -77,30 +77,25 @@ export class PaginationComponent {
     return this.paginationService.getCurrentPage() === page;
   }
 
- getPageNumbers(): number[] {
-  const currentPage = this.paginationService.getCurrentPage();
-  const totalPages = this.paginationService.getTotalPages();
+  getPageNumbers(): number[] {
+    const currentPage = this.paginationService.getCurrentPage();
+    const totalPages = this.paginationService.getTotalPages();
+    const maxVisiblePages = 5; // Numero massimo di pulsanti visibili
 
-  const visiblePages = [currentPage]; // Inizia con la pagina corrente
+    let startPage = Math.max(0, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
 
-  const maxVisiblePages = 5; // Numero massimo di pulsanti visibili
+    // Aggiusta gli indici se non c'è spazio sufficiente sulla destra o sulla sinistra
+    const diff = endPage - startPage + 1;
+    if (diff < maxVisiblePages) {
+      if (startPage === 0) {
+        endPage = Math.min(totalPages - 1, endPage + maxVisiblePages - diff);
+      } else {
+        startPage = Math.max(0, startPage - (maxVisiblePages - diff));
+      }
+    }
 
-  let previousPage = currentPage - 1;
-  let nextPage = currentPage + 1;
-
-  // Aggiungi le pagine precedenti alla pagina corrente
-  while (previousPage > 0 && visiblePages.length < maxVisiblePages) {
-    visiblePages.unshift(previousPage);
-    previousPage--;
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => i + startPage);
   }
-
-  // Aggiungi le pagine successive alla pagina corrente
-  while (nextPage <= totalPages && visiblePages.length < maxVisiblePages) {
-    visiblePages.push(nextPage);
-    nextPage++;
-  }
-
-  return visiblePages;
-}
 
 }

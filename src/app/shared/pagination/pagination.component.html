@@ -13,7 +13,7 @@
 
 
   <button  class="btn btn-success btn-lg"(click)="goToNextPage()" [disabled]="isLastPage()">&#8250;</button>
-  <button class="btn btn-primary btn-lg" (click)="goToLastPage()" [disabled]="isLastPage()">&#187;</button>
+  <button class="btn btn-primary btn-lg" (click)="goToLastPage()" [disabled]="isLastPage() || this.paginationService.totalPages === 1">&#187;</button>
 </div>
 </div>
 </div>

@@ -7,12 +7,18 @@ export class PaginationService {
 
   constructor() {
      this.currentPage = 0;
-    this.totalPages = 0; }
+    this.totalPages = 0;
+   }
   public currentPage: number;
-  private totalPages: number;
+  public totalPages: number;
+
 
   setTotalPages(totalResults: number, limit: number) {
-    this.totalPages = Math.ceil(totalResults / limit);
+    if (totalResults <= limit) {
+      this.totalPages = 1; // Crea solo una pagina se i risultati sono minori o uguali al limite
+    } else {
+      this.totalPages = Math.ceil(totalResults / limit);
+    }
   }
 
   getCurrentPage(): number {

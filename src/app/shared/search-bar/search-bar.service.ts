@@ -34,7 +34,7 @@ export class SearchBarService {
   responseArray!: any[];
   searchvar=false
   //taking input value
- async search() {
+  search() {
 
     this.textParam = this.textInput.value;
     this.selectParam = this.selectedOption.value;
@@ -90,4 +90,3 @@ this.langParam=this.languageInput.value
     return this.responseArray
   }
 }
-/*FARE SUBSCRIBE ALLA GET DI QUESTO SERVICE*/
