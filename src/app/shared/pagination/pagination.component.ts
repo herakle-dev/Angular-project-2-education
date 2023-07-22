@@ -1,6 +1,7 @@
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { PaginationService } from './pagination.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-pagination',
@@ -15,8 +16,11 @@ export class PaginationComponent {
   @Output() pageChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   responseArray: any[] = [];
   @Input()searchvar!:boolean
+  private ngUnsubscribe = new Subject<void>();
 
   paginationResultsWithParams(offset: number) {
+    this.searchBarService.cancelRequests();
+
     this.searchBarService.offset = offset * this.searchBarService.limit;
     this.searchBarService.URLmaker(
       this.searchBarService.selectParam,
@@ -24,13 +28,12 @@ export class PaginationComponent {
       this.searchBarService.limit,
       this.searchBarService.offset,
       this.searchBarService.langParam
-
     )
    this.searchBarService.fetchResultsWithOffset(
     this.searchBarService.textParam,
     this.searchBarService.limit,
     this.searchBarService.offset * this.searchBarService.limit
-   )
+   ) .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((results) => {
         this.responseArray = results.works || results.docs ;
         this.searchBarService.setArrayToShow(this.responseArray)

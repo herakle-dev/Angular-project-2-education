@@ -15,7 +15,7 @@
           <img
             class="card-img-top"
             src="https://covers.openlibrary.org/b/id/{{
-              selectedOption.value === 'subject' ? book.cover_id : book.cover_i
+              this.searchBarService.selectParam === 'subject' ? book.cover_id : book.cover_i
             }}.jpg"
             alt="Cover"
           />
@@ -24,10 +24,10 @@
             class="card-text"
             (click)="
               this.itemDetailService.goDetails(
-                selectedOption.value === 'subject'
+                this.searchBarService.selectParam === 'subject'
                 ? book.authors[0].name
                 : book.author_name[0],
-                selectedOption.value === 'subject'
+                this.searchBarService.selectParam === 'subject'
                   ? book.authors[0].key
                   : '/authors/'+ book.author_key[0]
               );
@@ -36,9 +36,9 @@
           >
             Autore :<em class="card-title">
               {{
-                selectedOption.value === "subject"
+                this.searchBarService.selectParam === "subject"
                   ? book.authors[0].name
-                  : book.author_name
+                  : getAuthorName(book.author_name)
               }}</em
             >
           </p>

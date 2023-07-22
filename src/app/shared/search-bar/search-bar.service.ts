@@ -3,15 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, finalize, map, takeUntil } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchBarService {
-  constructor(private http: HttpClient,
-    private paginationService:PaginationService,
-    private router:Router) {
+  constructor(
+    private http: HttpClient,
+    private paginationService: PaginationService,
+    private router: Router
+  ) {
     this.limit = 50;
   }
   //base url
@@ -21,7 +23,7 @@ export class SearchBarService {
   //input
   textParam!: string | null;
   selectParam!: string | null;
-  langParam!:string|null;
+  langParam!: string | null;
   //form
   @ViewChild('searchForm', { static: false }) searchForm!: NgForm;
   textInput = new FormControl('');
@@ -32,22 +34,42 @@ export class SearchBarService {
   offset: number = 0;
   //array
   responseArray!: any[];
-  searchvar=false
+  searchvar = false;
+  private isRequestInProgress = false;
+  private cancelSignal$ = new Subject<void>();
+
+  cancelRequests() {
+    this.cancelSignal$.next();
+  }
   //taking input value
   search() {
+    this.cancelRequests();
 
     this.textParam = this.textInput.value;
     this.selectParam = this.selectedOption.value;
-this.langParam=this.languageInput.value
-    this.URLmaker(this.selectParam, this.textParam, this.limit, this.offset,this.langParam);
+    this.langParam = this.languageInput.value;
+    this.URLmaker(
+      this.selectParam,
+      this.textParam,
+      this.limit,
+      this.offset,
+      this.langParam
+    );
+    console.log(this.selectParam, 'param')
 
-    return (this.textParam, this.selectParam);
+    return this.textParam, this.selectParam;
   }
 
-  URLmaker(text: any, param: string | null, limit: number, offset: number,language:string|null) {
+  URLmaker(
+    text: any,
+    param: string | null,
+    limit: number,
+    offset: number,
+    language: string | null
+  ) {
     text = this.textParam;
     param = this.selectParam;
-    language=this.langParam
+    language = this.langParam;
     // Creazione dell'URL basato sulla selezione e l'input di testo
     if (param === 'subject') {
       text = text.trim().toLowerCase();
@@ -57,16 +79,21 @@ this.langParam=this.languageInput.value
     } else if (param === 'author') {
       this.apiUrl = `${this.openLibraryURL}/search.json?author=${text}&q=language:${language}&limit=${limit}&offset=${offset}`;
     }
-
-
   }
-//simple function to get the num to iterate for pagination
+  //simple function to get the num to iterate for pagination
   fetchThingsfromAPI(apiURL: string): Observable<any> {
     apiURL = this.apiUrl;
-    const url = `home/search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
-    this.router.navigate([url])
-    console.log(url)
-    return this.http.get<any>(`${apiURL}`);
+    const url = `home/search/${this.languageInput.value}∼/${
+      this.selectedOption.value
+    }/${this.textInput.value}/${this.paginationService.currentPage + 1}`;
+    this.router.navigate([url]);
+    console.log(url);
+    return this.http.get<any>(`${apiURL}`).pipe(
+      takeUntil(this.cancelSignal$),
+      finalize(() => {
+        this.isRequestInProgress = false;
+      })
+    );;
   }
 
   fetchResultsWithOffset(
@@ -75,18 +102,27 @@ this.langParam=this.languageInput.value
     offset: number
   ): Observable<any> {
     // console.log(this.apiUrl);
-    const url = `home/search/${this.languageInput.value}∼/${this.selectedOption.value}/${this.textInput.value}/${this.paginationService.currentPage+1}`;
-    this.router.navigate([url])
+    const url = `home/search/${this.languageInput.value}∼/${
+      this.selectedOption.value
+    }/${this.textInput.value}/${this.paginationService.currentPage + 1}`;
+    this.router.navigate([url]);
 
-  //  console.log(url)
-    return this.http.get(this.apiUrl);
+    //  console.log(url)
+    return this.http.get(this.apiUrl).pipe(
+      takeUntil(this.cancelSignal$),
+      finalize(() => {
+        this.isRequestInProgress = false;
+      })
+    );;
   }
 
-
-  setArrayToShow(array:any){
-    this.responseArray =array
+  setArrayToShow(array: any) {
+    this.responseArray = array;
   }
-  getResponseArr(){
-    return this.responseArray
+  getResponseArr() {
+    return this.responseArray;
+  }
+  onParamselect(selectedOption: any):any {
+  return  selectedOption = this.selectedOption.value;
   }
 }

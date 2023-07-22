@@ -1,35 +1,48 @@
 import { Attribute } from '@angular/compiler';
 import { PaginationService } from '../pagination/pagination.service';
 import { SearchBarService } from './search-bar.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainPageService } from 'src/app/core/main-page/main-page.service';
+import { takeUntil, Subject, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
   constructor(
     private searchBarService: SearchBarService,
     private paginationService: PaginationService
   ) {}
 
   @Input() responseArray: any;
-  // var used to show/hide things
   @Input() searchvar = this.searchBarService.searchvar;
   limit = this.searchBarService.limit;
   selectedOption = this.searchBarService.selectedOption;
   textInput = this.searchBarService.textInput;
   selectedFlag = this.searchBarService.langParam;
   paginatedResults!: any[];
-
+  private cancelSignal$ = new Subject<void>();
+  private stopSignal$ = new Subject<void>();
+  private isRequestInProgress = false;
 
   //INIT
   ngOnInit(): void {
-   this.reset()
+    this.reset();
   }
+  ngOnDestroy() {
+    // Chiudi i segnali quando il componente viene distrutto
+    this.cancelSignal$.next();
+    this.cancelSignal$.complete();
+    this.stopSignal$.next();
+    this.stopSignal$.complete();
+  }
+  cancelRequests() {
+    this.cancelSignal$.next();
+  }
+
   //RESET
   reset() {
     this.searchBarService.offset = this.searchBarService.offset;
@@ -43,6 +56,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   search() {
+    this.cancelRequests();
     this.searchBarService.offset = this.searchBarService.offset;
     this.paginationService.currentPage = this.paginationService.currentPage;
     if (this.searchvar) {
@@ -54,30 +68,36 @@ export class SearchBarComponent implements OnInit {
     this.searchBarService.search();
 
     // Effettua la chiamata API con i parametri di ricerca
-    this.searchBarService.fetchThingsfromAPI(apiUrl).subscribe((response) => {
-      if (response.works) {
-        const workCount = response.work_count;
-        if(workCount<=this.limit){
-          this.paginationService.setTotalPages(workCount-1, this.limit);
-        }else {
-                  this.paginationService.setTotalPages(workCount, this.limit);
-
+    this.searchBarService
+      .fetchThingsfromAPI(apiUrl)
+      .pipe(
+        takeUntil(this.stopSignal$),
+        finalize(() => {
+          this.isRequestInProgress = false;
+        })
+      )
+      .subscribe((response) => {
+        if (response.works) {
+          const workCount = response.work_count;
+          if (workCount <= this.limit) {
+            this.paginationService.setTotalPages(workCount - 1, this.limit);
+          } else {
+            this.paginationService.setTotalPages(workCount, this.limit);
+          }
+          this.paginatedResults = response.works;
+        } else if (response.docs) {
+          const workCount = response.work_count || response.numFound;
+          if (workCount <= this.limit) {
+            this.paginationService.setTotalPages(workCount - 1, this.limit);
+          } else {
+            this.paginationService.setTotalPages(workCount, this.limit);
+          }
+          this.paginatedResults = response.docs;
         }
-        this.paginatedResults = response.works;
-
-      } else if (response.docs) {
-        const workCount = response.work_count || response.numFound;
-        if(workCount<=this.limit){
-          this.paginationService.setTotalPages(workCount-1, this.limit);
-        }else {
-        this.paginationService.setTotalPages(workCount, this.limit);
-        }
-        this.paginatedResults = response.docs;
-      }
-      // console.log(this.paginatedResults);
-      this.searchBarService.setArrayToShow(this.paginatedResults);
-      this.searchvar = true;
-    });
+        // console.log(this.paginatedResults);
+        this.searchBarService.setArrayToShow(this.paginatedResults);
+        this.searchvar = true;
+      });
   }
 
   //input field
@@ -91,7 +111,7 @@ export class SearchBarComponent implements OnInit {
   onLanguageChange(value: string) {
     this.searchBarService.languageInput.patchValue(value);
   }
-//param section
+  //param section
   onParamselect(selectedOption: any) {
     selectedOption = this.searchBarService.selectedOption.value;
   }
@@ -105,8 +125,4 @@ export class SearchBarComponent implements OnInit {
     { name: 'Tedesco', value: 'ger', icon: 'fi fi-de' },
     { name: 'Russo', value: 'rus', icon: 'fi fi-ru' },
   ];
-
 }
-/*
-limit  100
-offset 0 + 1 +2 +3 */

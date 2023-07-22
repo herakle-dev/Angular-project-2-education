@@ -1,5 +1,6 @@
-  <div class="fakeLogo">
-  <a routerLink="" (click)="reset()"> <h1>
+<div class="fakeLogo">
+  <a routerLink="" (click)="reset()">
+    <h1>
       <strong class="big-logo"
         ><span
           ><span class="g-blue">Op</span> <span class="o-red">en</span
@@ -8,62 +9,91 @@
           <span class="o-red e-red">y</span></span
         ></strong
       >
-  </h1></a> <small style="margin-top: 10px;">2.0</small>
+    </h1></a
+  >
+  <small style="margin-top: 10px">2.0</small>
+</div>
 
-  </div>
+<div class="form-container">
+  <form #searchForm="ngForm" (ngSubmit)="search()">
+    <mat-form-field>
+      <mat-label>Cosa vuoi cercare?</mat-label>
+      <input
+        matInput
+        name="textInput"
+        [formControl]="textInput"
+        placeholder="Autore, categoria, titolo"
+        required
+      />
+      <mat-hint
+        *ngIf="!textInput.valid && textInput.touched"
+        class="alert alert-danger"
+        role="alert"
+        >Il campo è obbligatorio</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Scegli un parametro</mat-label>
+      <mat-select
+        [formControl]="selectedOption"
+        name="selectedOption"
+        required
 
-  <div class="form-container">
-    <form #searchForm="ngForm" (ngSubmit)="search()">
-      <mat-form-field>
-        <mat-label>Cosa vuoi cercare?</mat-label>
-        <input matInput  name="textInput" [formControl]="textInput" placeholder="Autore, categoria, titolo" required>
-        <mat-hint *ngIf="!textInput.valid && textInput.touched" class="alert alert-danger" role="alert">Il campo è obbligatorio</mat-hint>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Scegli un parametro</mat-label>
-        <mat-select [formControl]="selectedOption" name="selectedOption" required (selectionChange)="onParamselect(selectedOption.value)">
-          <mat-option value="author">Autore</mat-option>
-          <mat-option value="title">Titolo</mat-option>
-          <mat-option value="subject">Argomento</mat-option>
-        </mat-select>
-        <mat-hint *ngIf="!selectedOption.valid && selectedOption.touched " class="alert alert-danger" role="alert">Il parametro è obbligatorio</mat-hint>
+      >
+        <mat-option value="author">Autore</mat-option>
+        <mat-option value="title">Titolo</mat-option>
+        <mat-option value="subject">Argomento</mat-option>
+      </mat-select>
+      <mat-hint
+        *ngIf="!selectedOption.valid && selectedOption.touched"
+        class="alert alert-danger"
+        role="alert"
+        >Il parametro è obbligatorio</mat-hint
+      >
+    </mat-form-field>
 
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>Quanti risultati vuoi per pagina?</mat-label>
+      <input
+        matInput
+        type="number"
+        min="1"
+        max="1000"
+        name="limitInput"
+        [(ngModel)]="limit"
+        required
+        (change)="getLimitValue(limit)"
+      />
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Quanti risultati vuoi per pagina?</mat-label>
-        <input matInput type="number" min="1" max="1000" name="limitInput" [(ngModel)]="limit" required (change)="getLimitValue(limit)">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Seleziona una lingua</mat-label>
-        <mat-select (selectionChange)="onLanguageChange($event.value)" value="">
-
-          <mat-option *ngFor="let flag of flags" [value]="flag.value" >
-            <span class="flag-icon {{ flag.icon }}"></span>
+    <mat-form-field>
+      <mat-label>Seleziona una lingua</mat-label>
+      <mat-select (selectionChange)="onLanguageChange($event.value)" value="">
+        <mat-option *ngFor="let flag of flags" [value]="flag.value">
+          <span class="flag-icon {{ flag.icon }}"></span>
           <span> {{ flag.name }}</span>
-          </mat-option >
-        </mat-select
-        >
-      </mat-form-field>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-
-
-
-
-
-
-
-
-      <button mat-raised-button color="accent" class="search-button"  type="submit" [disabled]="!textInput.dirty || !selectedOption.dirty ">
+    <button
+      mat-raised-button
+      color="accent"
+      class="search-button"
+      type="submit"
+      [disabled]="!textInput.dirty || !selectedOption.dirty"
+    >
       Cerca
-      </button>
-    </form>
-  </div>
+    </button>
+  </form>
+</div>
 
-
-
-  <app-pagination  (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
-  <router-outlet ></router-outlet>
-  <app-pagination   (pageChange)="fetchPaginatedResults($event)" [searchvar]="this.searchvar"></app-pagination>
-
+<app-pagination
+  (pageChange)="fetchPaginatedResults($event)"
+  [searchvar]="this.searchvar"
+></app-pagination>
+<router-outlet ></router-outlet>
+<app-pagination
+  (pageChange)="fetchPaginatedResults($event)"
+  [searchvar]="this.searchvar"
+></app-pagination>
