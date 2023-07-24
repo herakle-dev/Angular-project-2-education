@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 import { MainPageService } from '../main-page/main-page.service';
+import { AuthorDetailsService } from '../author-details/author-details.service';
 
 @Component({
   selector: 'app-item-details',
@@ -12,28 +13,44 @@ import { MainPageService } from '../main-page/main-page.service';
 export class ItemDetailsComponent {
   constructor(private route: ActivatedRoute,
     private itemDetailsService:ItemDetailsService,
+    public authorDetailsService:AuthorDetailsService,
     private searchBarService:SearchBarService,
     private mainPageService:MainPageService) {
 
     this.itemKey = this.itemDetailsService.getKey();
 
   }
-  @Input() searchvar = this.searchBarService.searchvar;
 
  itemKey!: string;
-details:any
+
+// covers:any
+// cover_edition:any
+// description:any
+// descriptionValue:any
+
+// key:any
+// title:any
+
+itemInfo:any
 
   ngOnInit() {
     // console.log(this.itemKey)
 this.itemDetailsService.getItemDetails().subscribe((response:any)=>{
   console.log(response)
-  this.details=response.description
-  // console.log(this.details)
+  this.itemInfo=response
+//   this.title=response.title
+//   this.description=response.description
+
+//  this.descriptionValue = response.description.value
+// this.covers=response.covers
+
 
 })
-this.searchvar=!this.searchvar
-console.log('init dettaglis')
-}
 
+
+}
+isObject(value: any): boolean {
+  return value instanceof Object;
+}
 
 }

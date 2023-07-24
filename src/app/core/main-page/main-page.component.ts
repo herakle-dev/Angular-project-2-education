@@ -5,6 +5,7 @@ import { PaginationService } from 'src/app/shared/pagination/pagination.service'
 import { MainPageService } from './main-page.service';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { AuthorDetailsService } from '../author-details/author-details.service';
 
 @Component({
   selector: 'app-main-page',
@@ -15,6 +16,7 @@ export class MainPageComponent implements OnDestroy{
   constructor(
     public searchBarService: SearchBarService,
     public itemDetailService: ItemDetailsService,
+    public authorDetailsService:AuthorDetailsService,
     public paginationService: PaginationService,
     public mainPageService: MainPageService
   ) {}
@@ -32,6 +34,9 @@ export class MainPageComponent implements OnDestroy{
   }
 
 ngOnDestroy() {
+  console.log(this.searchBarService.searchvar)
+  this.searchBarService.searchvar=false
+    console.log(this.searchBarService.searchvar)
   // Chiudi i segnali quando il componente viene distrutto
   this.cancelSignal$.next();
   this.cancelSignal$.complete();

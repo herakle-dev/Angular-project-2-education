@@ -7,43 +7,45 @@
         <div class="card-body">
           <h5
             class="card-title bookTitle"
-            (click)="this.itemDetailService.goDetails(book.title, book.key)"
+            (click)="this.itemDetailService.goDetails(book?.title, book?.key)"
           >
-            {{ book.title }}
+            {{ book?.title }}
           </h5>
-
+          <div class="divider"></div>
           <img
             class="card-img-top bookCover"
             src="https://covers.openlibrary.org/b/id/{{
-              this.searchBarService.selectParam === 'subject' ? book.cover_id : book.cover_i
-            }}.jpg"
+              this.searchBarService.selectParam === 'subject'
+                ? book?.cover_id
+                : book?.cover_i
+            }}-M.jpg"
             alt="Cover"
           />
-
+          <div class="divider"></div>
           <p
             class="card-text"
             (click)="
-              this.itemDetailService.goDetails(
+              this.authorDetailsService.goDetails(
                 this.searchBarService.selectParam === 'subject'
-                ? book.authors[0].name
-                : book.author_name[0],
+                  ? book?.authors[0]?.name
+                  : book?.author_name[0],
                 this.searchBarService.selectParam === 'subject'
-                  ? book.authors[0].key
-                  : '/authors/'+ book.author_key[0]
-              );
-
+                  ? book?.authors[0]?.key
+                  : '/authors/' + book?.author_key[0]
+              )
             "
           >
             Autore :<em class="card-title">
-              {{
-                this.searchBarService.selectParam === "subject"
-                  ? book.authors[0].name
-                  : getAuthorName(book.author_name)
+              {{  this.searchBarService.selectParam === "subject"
+                  ? book?.authors[0]?.name
+                  : getAuthorName(book?.author_name)
               }}</em
             >
           </p>
-          <p class="card-text ">
-            Anno di pubblicazione : <span class="card-date">{{ book.first_publish_year }}</span>
+          <div class="divider"></div>
+          <p class="card-text">
+            Anno di pubblicazione :
+            <span class="card-date">{{ book?.first_publish_year }}</span>
           </p>
         </div>
       </div>

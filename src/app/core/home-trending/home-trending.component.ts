@@ -3,6 +3,7 @@ import { HomeTrendingService } from './home-trending.service';
 import { ItemDetailsService } from '../item-details/item-details.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { AuthorDetailsService } from '../author-details/author-details.service';
 
 @Component({
   selector: 'app-home-trending',
@@ -14,7 +15,8 @@ export class HomeTrendingComponent implements OnInit, OnDestroy {
 
   constructor(
     private homeService: HomeTrendingService,
-    public itemDetailsService: ItemDetailsService
+    public itemDetailsService: ItemDetailsService,
+    public authorDetailsService:AuthorDetailsService
   ) {}
 
   time: string = 'now';

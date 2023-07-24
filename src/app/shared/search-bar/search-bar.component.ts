@@ -13,7 +13,7 @@ import { takeUntil, Subject, finalize } from 'rxjs';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   constructor(
-    private searchBarService: SearchBarService,
+    public searchBarService: SearchBarService,
     private paginationService: PaginationService
   ) {}
 
@@ -48,7 +48,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.searchBarService.offset = this.searchBarService.offset;
     this.paginationService.currentPage = this.paginationService.currentPage;
     this.paginatedResults = [];
-    this.searchvar = false;
+    this.searchBarService.searchvar = false;
   }
   //method for pagination component to emit new results every page
   fetchPaginatedResults(results: any[]) {
@@ -59,7 +59,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.cancelRequests();
     this.searchBarService.offset = this.searchBarService.offset;
     this.paginationService.currentPage = this.paginationService.currentPage;
-    if (this.searchvar) {
+    if (this.searchBarService.searchvar) {
       this.searchBarService.offset = 0;
       this.paginationService.currentPage = 0;
     }
@@ -96,7 +96,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         }
         // console.log(this.paginatedResults);
         this.searchBarService.setArrayToShow(this.paginatedResults);
-        this.searchvar = true;
+        this.searchBarService.searchvar = true;
       });
   }
 

@@ -1,21 +1,123 @@
-<h2>{{ details }}</h2>
-<!-- <p>Description: {{ details.description?.value }}</p>
-  <p>Created: {{ details.created?.value }}</p>
-  <p>Last Modified: {{ details.last_modified?.value }}</p>
-  <p>Latest Revision: {{ details.latest_revision }}</p>
-  <p>Revision: {{ details.revision }}</p> -->
+<!--
+  PER CATEGORIA
 
-<h3>Authors:</h3>
-<!-- <ul>
-    <li *ngFor="let author of details.authors">
-      {{ author.author.name }}
-    </li>
-  </ul>
+  cover_edition : { key : /book/CODICE}
+  covers : [ array di num (codici da jpg)]
+  created : value: data
+  description
+  first_pubblish_date
+  key : /works/codice
+  last_modified : value
+  title
 
-  <h3>Subjects:</h3>
-  <ul>
-    <li *ngFor="let subject of details.subjects">
-      {{ subject }}
-    </li>
-  </ul> -->
+-->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 description">
+      <h1>{{ itemInfo?.title }}</h1>
+      <p *ngIf="!isObject(itemInfo?.description)">{{ itemInfo?.description }}</p>
+      <p *ngIf="itemInfo?.description?.value">{{ itemInfo?.description?.value }}</p>
+      <h1 *ngIf="!itemInfo?.description">Nessuna descrizione per questo articolo in archivio</h1>
+    </div>
 
+
+  <div class="col-lg-8">
+      <img *ngIf="!itemInfo?.covers" src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" alt="">
+      <h1 *ngIf="itemInfo?.covers">In archivio ci sono {{ itemInfo?.covers?.length || 0 }} immagini per {{ itemInfo?.title || 'questo articolo' }}</h1>
+      <div class="row ">
+      <div *ngFor="let cover of itemInfo?.covers; let i = index" class="col-lg-4">
+        <div class="card col-lg-3">
+          <img
+            [src]="'https://covers.openlibrary.org/b/id/' + cover + '-M.jpg'"
+            alt="Cover"
+          />
+          <caption><strong>Cover n° {{ i + 1 }}</strong></caption>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--
+  per TITOLO
+  authors
+:
+Array(1)
+0
+:
+author
+:
+key
+:
+"/authors/OL10396113A"
+created
+:
+{type: '/type/datetime', value: '2022-05-26T13:20:33.919446'}
+key
+:
+"/works/OL27858019W"
+last_modified
+:
+{type: '/type/datetime', value: '2022-12-09T15:46:48.240131'}
+latest_revision
+:
+2
+revision
+:
+2
+subjects
+:
+['Fantasy']
+title
+:
+"Lacanian Fantasy"
+type
+:
+{key: '/type/work'}
+
+per autore
+
+authors
+:
+(4) [{…}, {…}, {…}, {…}]
+covers
+:
+Array(1)
+0
+:
+10313928
+length
+:
+1
+[[Prototype]]
+:
+Array(0)
+created
+:
+{type: '/type/datetime', value: '2020-07-27T23:37:48.210210'}
+key
+:
+"/works/OL20966094W"
+last_modified
+:
+{type: '/type/datetime', value: '2021-12-29T18:05:38.246513'}
+latest_revision
+:
+2
+revision
+:
+2
+subjects
+:
+['Language and languages']
+title
+:
+"Final Fantasy XV"
+type
+:
+{key: '/type/work'}
+-->

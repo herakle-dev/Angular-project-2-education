@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { MainPageComponent } from './core/main-page/main-page.component';
 import { SharedModule } from "./shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ItemDetailsComponent } from './core/item-details/item-details.component';
-import { HomeTrendingComponent } from './core/home-trending/home-trending.component';
+import { AuthorDetailsComponent } from './core/author-details/author-details.component';
+import { FooterModule } from './shared/footer/footer.module';
+
 
 
 @NgModule({
     declarations: [
         AppComponent,
+        AuthorDetailsComponent,
 
 
 
@@ -26,6 +28,7 @@ import { HomeTrendingComponent } from './core/home-trending/home-trending.compon
         SharedModule,
         UiKitModule,
         BrowserAnimationsModule,
+        FooterModule
 
     ]
 })

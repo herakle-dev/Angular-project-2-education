@@ -92,10 +92,11 @@
 
 <app-pagination
   (pageChange)="fetchPaginatedResults($event)"
-  [searchvar]="this.searchvar"
+  [searchvar]="this.searchBarService.searchvar"
 ></app-pagination>
 <router-outlet ></router-outlet>
 <app-pagination
   (pageChange)="fetchPaginatedResults($event)"
-  [searchvar]="this.searchvar"
+  [searchvar]="this.searchBarService.searchvar"
 ></app-pagination>
+

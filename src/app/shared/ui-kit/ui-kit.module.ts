@@ -24,7 +24,8 @@ const components=[
    MatDividerModule,
    MatCardModule,
    MatSliderModule,
-   MatIconModule
+   MatIconModule,
+
 
 ]
 

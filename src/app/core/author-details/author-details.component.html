@@ -1,0 +1,30 @@
+<div class="container" *ngIf="authorInfo">
+  <div class="row bio">
+    <div class=" row col-lg-6 pic">
+      <div
+        *ngFor="let cover of authorInfo.photos; let i = index"
+        class="col-lg-3 img-container"
+      >
+        <div class="div" *ngIf="i < 5">
+          <img
+            [src]="'https://covers.openlibrary.org/b/id/' + cover + '-M.jpg'"
+            alt="Cover"
+          />
+        </div>
+      </div>
+    </div>
+    <div class=" col-lg-5">
+      <h2>{{ authorInfo.name }}</h2>
+      <p *ngIf="!isObject(authorInfo.bio)">{{ authorInfo.bio }}</p>
+      <p *ngIf="authorInfo.bio.value">{{ authorInfo.bio.value }}</p>
+      <p *ngIf="authorInfo.birth_date">
+        Data di nascita: <strong>{{ authorInfo.birth_date }}</strong>
+      </p>
+      <p *ngIf="authorInfo.death_date">
+        Data morte: <strong>{{ authorInfo.death_date }}</strong>
+      </p>
+    </div>
+  </div>
+
+
+</div>

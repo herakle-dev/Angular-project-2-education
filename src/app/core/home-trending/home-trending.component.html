@@ -2,26 +2,87 @@
   <h2>Ecco una lista dei libri più letti in Italia!</h2>
 
   <ul>
-    <li (click)="onItemClick('now')" class="btn btn-success" data-value="Del momento">Del momento</li>
-    <li (click)="onItemClick('daily')" class="btn btn-info" data-value="Di oggi">Di oggi</li>
-    <li (click)="onItemClick('weekly')"class="btn btn-primary"  data-value="Della settimana">Della settimana</li>
-    <li (click)="onItemClick('monthly')"class="btn btn-warning" data-value="Del mese">Del mese</li>
-    <li (click)="onItemClick('yearly')" class="btn btn-danger" data-value="Dell'anno">Dell'anno</li>
+    <li
+      (click)="onItemClick('now')"
+      class="btn btn-success"
+      data-value="Del momento"
+    >
+      Del momento
+    </li>
+    <li
+      (click)="onItemClick('daily')"
+      class="btn btn-info"
+      data-value="Di oggi"
+    >
+      Di oggi
+    </li>
+    <li
+      (click)="onItemClick('weekly')"
+      class="btn btn-primary"
+      data-value="Della settimana"
+    >
+      Della settimana
+    </li>
+    <li
+      (click)="onItemClick('monthly')"
+      class="btn btn-warning"
+      data-value="Del mese"
+    >
+      Del mese
+    </li>
+    <li
+      (click)="onItemClick('yearly')"
+      class="btn btn-danger"
+      data-value="Dell'anno"
+    >
+      Dell'anno
+    </li>
   </ul>
 </div>
 
-<div class="container   ">
-  <div class="row row-cols-3">
-    <div class="card col-lg-4" *ngFor="let item of itemResponseByTime">
-      <h5 class="card-title" (click)="this.itemDetailsService.goDetails(item.title,item.key)">{{ item.title }}</h5>
-      <img class="card-img-top"
-      [src]="item.cover_edition_key ? 'https://covers.openlibrary.org/b/olid/' + item.cover_edition_key + '.jpg' : 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png'"
-      alt="Cover"
- />      <div class="card-body">
-        <p class="card-text">Autore: {{ item.author_name }}</p>
-        <p class="card-text">Anno di pubblicazione: {{ item.first_publish_year }}</p>
+<div class="container fit-card">
+  <div class="row row-cols-4">
+    <div *ngFor="let item of itemResponseByTime">
+      <div class="card">
+        <div class="card-body">
+          <h5
+            class="card-title"
+            (click)="this.itemDetailsService.goDetails(item.title, item.key)"
+          >
+            {{ item.title }}
+          </h5>
+          <div class="divider"></div>
+          <img
+            class="card-img-top bookCover"
+            [src]="
+              item.cover_edition_key
+                ? 'https://covers.openlibrary.org/b/olid/' +
+                  item.cover_edition_key +
+                  '-M.jpg'
+                : 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png'
+            "
+            alt="Cover"
+          />
+          <div class="divider"></div>
+
+          <p class="card-text">
+            Autore:<em class="card-title"
+              >
+              <!--correggere url call ecc-->
+              <span
+                (click)="
+                  this.authorDetailsService.goDetails(item.author_name,'/authors/'+ item.author_key)
+                "
+                >{{ item.author_name }}</span
+              >
+            </em>
+          </p>
+          <div class="divider"></div>
+          <p class="card-date">
+            Anno di pubblicazione: {{ item.first_publish_year }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-

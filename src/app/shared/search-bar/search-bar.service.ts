@@ -55,7 +55,6 @@ export class SearchBarService {
       this.offset,
       this.langParam
     );
-    console.log(this.selectParam, 'param')
 
     return this.textParam, this.selectParam;
   }
@@ -87,9 +86,8 @@ export class SearchBarService {
       this.selectedOption.value
     }/${this.textInput.value}/${this.paginationService.currentPage + 1}`;
     this.router.navigate([url]);
-    console.log(url);
-    return this.http.get<any>(`${apiURL}`).pipe(
-      takeUntil(this.cancelSignal$),
+    return this.http.get<any>(`${apiURL}`)
+    .pipe(takeUntil(this.cancelSignal$),
       finalize(() => {
         this.isRequestInProgress = false;
       })
