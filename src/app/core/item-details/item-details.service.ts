@@ -29,7 +29,7 @@ export class ItemDetailsService{
   }
   goDetails(title: string | string[], key: string) {
     if (typeof title === 'string') {
-      title = title.replace(/\s/g, '_');
+      title = this.formatTitle(title);
     } else if (Array.isArray(title)) {
 
       title = title .map((item) => item.replace(/\s/g, '_'));
@@ -39,5 +39,9 @@ export class ItemDetailsService{
     const url =`home/details/${title}`
     this.router.navigate([url]);
 
+  }
+  formatTitle(title: string): string {
+    // Sostituisci gli spazi con underscore e i caratteri speciali con "-"
+    return title.replace(/\s/g, '_').replace(/[^\w\s]/g, '-');
   }
 }

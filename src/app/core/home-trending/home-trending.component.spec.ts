@@ -56,5 +56,21 @@ describe('HomeTrendingComponent', () => {
     expect(component.time).toBe('weekly');
   });
 
-  // Add more test cases for other HomeTrendingComponent methods and behaviors as needed
-});
+  it('should return the first element if value is an array', () => {
+    const inputArray = [1, 2, 3];
+    expect(component.getFirstValueIfArray(inputArray)).toBe(1);
+
+    const inputStringArray = ['a', 'b', 'c'];
+    expect(component.getFirstValueIfArray(inputStringArray)).toBe('a');
+  });
+
+  it('should return the value as is if it is not an array', () => {
+    const inputValue = 42;
+    expect(component.getFirstValueIfArray(inputValue)).toBe(42);
+
+    const inputString = 'hello';
+    expect(component.getFirstValueIfArray(inputString)).toBe('hello');
+
+    const inputObject = { key: 'value' };
+    expect(component.getFirstValueIfArray(inputObject)).toEqual({ key: 'value' });
+  })});

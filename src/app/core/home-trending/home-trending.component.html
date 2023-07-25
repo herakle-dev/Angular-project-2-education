@@ -1,3 +1,5 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div class="container">
   <h2>Ecco una lista dei libri più letti in Italia!</h2>
 
@@ -71,9 +73,9 @@
               <!--correggere url call ecc-->
               <span
                 (click)="
-                  this.authorDetailsService.goDetails(item.author_name,'/authors/'+ item.author_key)
+                  this.authorDetailsService.goDetails(getFirstValueIfArray(item.author_name),'/authors/'+ getFirstValueIfArray(item.author_key))
                 "
-                >{{ item.author_name }}</span
+                >{{ getFirstValueIfArray(item.author_name) }}</span
               >
             </em>
           </p>

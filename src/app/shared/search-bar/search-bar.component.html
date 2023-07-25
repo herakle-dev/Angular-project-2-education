@@ -82,7 +82,7 @@
       class="search-button"
       type="submit"
 
-      [disabled]="!textInput.dirty || !selectedOption.dirty"
+      [disabled]="!textInput.dirty || !selectedOption.dirty || textInput.value===''"
     >  <mat-icon class="material-icons">search</mat-icon>
 
       Cerca
@@ -90,12 +90,12 @@
   </form>
 </div>
 
-<app-pagination
+<app-pagination *ngIf="getLimitValue(limit)===paginatedResults.length"
   (pageChange)="fetchPaginatedResults($event)"
   [searchvar]="this.searchBarService.searchvar"
 ></app-pagination>
 <router-outlet ></router-outlet>
-<app-pagination
+<app-pagination *ngIf="getLimitValue(limit)===paginatedResults.length"
   (pageChange)="fetchPaginatedResults($event)"
   [searchvar]="this.searchBarService.searchvar"
 ></app-pagination>

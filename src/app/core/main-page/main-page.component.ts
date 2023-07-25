@@ -1,4 +1,4 @@
-import { Component,  OnDestroy } from '@angular/core';
+import { Component,  OnDestroy, OnInit } from '@angular/core';
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 import { ItemDetailsService } from '../item-details/item-details.service';
 import { PaginationService } from 'src/app/shared/pagination/pagination.service';
@@ -31,6 +31,7 @@ export class MainPageComponent implements OnDestroy{
   cancelRequests() {
     this.cancelSignal$.next();
   }
+
 
 ngOnDestroy() {
   this.searchBarService.searchvar=false

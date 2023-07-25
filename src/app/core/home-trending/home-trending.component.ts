@@ -45,4 +45,7 @@ export class HomeTrendingComponent implements OnInit, OnDestroy {
     this.time = value;
     this.trending();
   }
+  getFirstValueIfArray(value: any): any {
+    return Array.isArray(value) ? value[0] : value;
+  }
 }

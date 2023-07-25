@@ -38,7 +38,7 @@
             "
           >
             Autore :<em class="card-title">
-              {{ (this.searchBarService.selectParam === 'subject' && book?.authors?.length > 0)
+              {{ (this.searchBarService.selectParam === 'subject')
               ? getAuthorName(book?.authors[0]?.name)
               : getAuthorName(book?.author_name) }}
 

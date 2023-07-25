@@ -2,18 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthorDetailsComponent } from './author-details.component';
 import { ItemDetailsService } from '../item-details/item-details.service';
 import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AuthorDetailsComponent', () => {
   let component: AuthorDetailsComponent;
   let fixture: ComponentFixture<AuthorDetailsComponent>;
   let mockItemDetailsService: jasmine.SpyObj<ItemDetailsService>;
 
-  beforeEach(() => {
-    mockItemDetailsService = jasmine.createSpyObj('ItemDetailsService', ['getItemDetails']);
+  beforeEach(() => {    mockItemDetailsService = jasmine.createSpyObj('ItemDetailsService', ['getItemDetails']);
 
     TestBed.configureTestingModule({
       declarations: [AuthorDetailsComponent],
-      providers: [{ provide: ItemDetailsService, useValue: mockItemDetailsService }]
+      providers: [{ provide: ItemDetailsService, useValue: mockItemDetailsService }],
+      imports:[HttpClientTestingModule]
     });
 
     fixture = TestBed.createComponent(AuthorDetailsComponent);
