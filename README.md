@@ -1,6 +1,9 @@
-# AngularProject2Education
-## Intro
-Welcome to this project developed by Ivan as an examination for Start2Impact. This project is developed using the public Api from [Open library](https://openlibrary.org/). Before starting this repo i had to study this api, i've learned how to make good calls, show result and filter those from the url i pass at the moment before call those api, so this improved my knowlege about Api and how to manipulate the response with Angular.
+# Start2Impact Examination Project - Open Library API
+ ## Introduction
+Welcome to the Start2Impact examination project developed by Ivan. This project utilizes the public API from Open Library to create an application with Angular. The purpose of this project is to demonstrate knowledge of working with APIs, making API calls, handling responses, and filtering data.
+
+## Project Overview
+The main goal of this project is to build an application that leverages the Open Library API to fetch and display book data. By working on this project, I aimed to enhance my understanding of API integration with Angular and how to manipulate API responses effectively.
 # So lets begin with some screenshot!
 ## First page shown to the user when he visit the deploy link or even run the ng serve command 
 ![Homepage](
