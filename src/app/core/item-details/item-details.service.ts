@@ -41,7 +41,6 @@ export class ItemDetailsService{
 
   }
   formatTitle(title: string): string {
-    // Sostituisci gli spazi con underscore e i caratteri speciali con "-"
     return title.replace(/\s/g, '_').replace(/[^\w\s]/g, '-');
   }
 }

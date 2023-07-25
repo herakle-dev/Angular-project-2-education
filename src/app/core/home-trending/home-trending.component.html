@@ -70,13 +70,13 @@
           <p class="card-text">
             Autore:<em class="card-title"
               >
-              <!--correggere url call ecc-->
               <span
                 (click)="
                   this.authorDetailsService.goDetails(getFirstValueIfArray(item.author_name),'/authors/'+ getFirstValueIfArray(item.author_key))
                 "
                 >{{ getFirstValueIfArray(item.author_name) }}</span
               >
+              <span *ngIf="!(item.author_name || item.author[0].name)">Autore sconosciuto</span>
             </em>
           </p>
           <div class="divider"></div>

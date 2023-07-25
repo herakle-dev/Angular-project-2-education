@@ -14,18 +14,18 @@ describe('PaginationService', () => {
   });
 
   it('should set total pages correctly when total results are less than or equal to limit', () => {
-    service.setTotalPages(10, 10); // Total results = 10, limit = 10, so it should have 1 page
+    service.setTotalPages(10, 10);
     expect(service.getTotalPages()).toBe(1);
 
-    service.setTotalPages(5, 10); // Total results = 5, limit = 10, so it should have 1 page
+    service.setTotalPages(5, 10);
     expect(service.getTotalPages()).toBe(1);
   });
 
   it('should set total pages correctly when total results are greater than limit', () => {
-    service.setTotalPages(15, 10); // Total results = 15, limit = 10, so it should have 2 pages
+    service.setTotalPages(15, 10);
     expect(service.getTotalPages()).toBe(2);
 
-    service.setTotalPages(27, 5); // Total results = 27, limit = 5, so it should have 6 pages
+    service.setTotalPages(27, 5);
     expect(service.getTotalPages()).toBe(6);
   });
 
@@ -37,10 +37,10 @@ describe('PaginationService', () => {
     service.goToPage(1);
     expect(service.getCurrentPage()).toBe(1);
 
-    service.goToPage(1); // Should not go below page 0
+    service.goToPage(1);
     expect(service.getCurrentPage()).toBe(1);
 
-    service.goToPage(9); // Should not go beyond the last page (page 9)
+    service.goToPage(9);
     expect(service.getCurrentPage()).toBe(9);
   });
 
@@ -53,11 +53,11 @@ describe('PaginationService', () => {
     service.goToPreviousPage();
     expect(service.getCurrentPage()).toBe(3);
 
-    service.goToPreviousPage(); // Should not go below page 0
+    service.goToPreviousPage();
     expect(service.getCurrentPage()).toBe(2);
 
     service.goToPage(9);
-    service.goToNextPage(); // Should not go beyond the last page (page 9)
+    service.goToNextPage();
     expect(service.getCurrentPage()).toBe(9);
   });
 

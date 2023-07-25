@@ -23,7 +23,6 @@ export class MainPageComponent implements OnDestroy{
 
 
    paginatedResults: any[] = [];
-  //  selectedOption = this.searchBarService.selectedOption;
   private unsubscribe$: Subject<void> = new Subject();
   public cancelSignal$ = new Subject<void>();
   private stopSignal$ = new Subject<void>();
@@ -35,7 +34,6 @@ export class MainPageComponent implements OnDestroy{
 
 ngOnDestroy() {
   this.searchBarService.searchvar=false
-  // Chiudi i segnali quando il componente viene distrutto
   this.cancelSignal$.next();
   this.cancelSignal$.complete();
   this.stopSignal$.next();

@@ -78,7 +78,7 @@ describe('SearchBarComponent', () => {
     expect(component.searchBarService.limit).toBe(num);
   });
 
-  it('should set the limit to 0 if num is negative', () => {
+  it('should set the limit to 50 if num is negative', () => {
     const num = -200;
     const expectedLimit = 50;
 

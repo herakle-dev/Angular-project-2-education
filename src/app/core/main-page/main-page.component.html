@@ -44,6 +44,10 @@
 
               </em
             >
+            <span *ngIf="((this.searchBarService.selectParam === 'subject')
+            ?  !getAuthorName(book?.authors[0]?.name)
+            :  !getAuthorName(book?.author_name) )">Autore sconosciuto</span>
+
           </p>
           <div class="divider"></div>
           <p class="card-text">

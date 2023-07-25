@@ -15,7 +15,7 @@ export class PaginationService {
 
   setTotalPages(totalResults: number, limit: number) {
     if (totalResults <= limit) {
-      this.totalPages = 1; // Crea solo una pagina se i risultati sono minori o uguali al limite
+      this.totalPages = 1;
     } else {
       this.totalPages = Math.ceil(totalResults / limit);
     }
