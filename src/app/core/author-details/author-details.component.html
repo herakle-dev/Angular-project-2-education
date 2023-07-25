@@ -1,6 +1,9 @@
 <div class="container" *ngIf="authorInfo">
   <div class="row bio">
     <div class=" row col-lg-6 pic">
+      <div *ngIf="!authorInfo.photos">
+        <h2>Nessuna foto di {{authorInfo.name}} presente in archivio </h2>
+      </div>
       <div
         *ngFor="let cover of authorInfo.photos; let i = index"
         class="col-lg-3 img-container"
