@@ -1,9 +1,6 @@
-import { Attribute } from '@angular/compiler';
 import { PaginationService } from '../pagination/pagination.service';
 import { SearchBarService } from './search-bar.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MainPageService } from 'src/app/core/main-page/main-page.service';
 import { takeUntil, Subject, finalize } from 'rxjs';
 
 @Component({
@@ -14,7 +11,7 @@ import { takeUntil, Subject, finalize } from 'rxjs';
 export class SearchBarComponent implements OnInit, OnDestroy {
   constructor(
     public searchBarService: SearchBarService,
-    private paginationService: PaginationService
+    public paginationService: PaginationService
   ) {}
 
   @Input() responseArray: any;
@@ -94,7 +91,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
           }
           this.paginatedResults = response.docs;
         }
-        // console.log(this.paginatedResults);
         this.searchBarService.setArrayToShow(this.paginatedResults);
         this.searchBarService.searchvar = true;
       });
@@ -104,6 +100,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   getLimitValue(num: number): number {
     if (num > 1000) {
       num = 1000;
+    }
+    else if(num<0){
+       num=50
     }
     this.limit = num;
     return (this.searchBarService.limit = this.limit);

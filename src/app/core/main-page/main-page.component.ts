@@ -1,9 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component,  OnDestroy } from '@angular/core';
 import { SearchBarService } from 'src/app/shared/search-bar/search-bar.service';
 import { ItemDetailsService } from '../item-details/item-details.service';
 import { PaginationService } from 'src/app/shared/pagination/pagination.service';
 import { MainPageService } from './main-page.service';
-import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { AuthorDetailsService } from '../author-details/author-details.service';
 
@@ -26,7 +25,7 @@ export class MainPageComponent implements OnDestroy{
    paginatedResults: any[] = [];
   //  selectedOption = this.searchBarService.selectedOption;
   private unsubscribe$: Subject<void> = new Subject();
-  private cancelSignal$ = new Subject<void>();
+  public cancelSignal$ = new Subject<void>();
   private stopSignal$ = new Subject<void>();
 
   cancelRequests() {
@@ -34,9 +33,7 @@ export class MainPageComponent implements OnDestroy{
   }
 
 ngOnDestroy() {
-  console.log(this.searchBarService.searchvar)
   this.searchBarService.searchvar=false
-    console.log(this.searchBarService.searchvar)
   // Chiudi i segnali quando il componente viene distrutto
   this.cancelSignal$.next();
   this.cancelSignal$.complete();
@@ -45,9 +42,9 @@ ngOnDestroy() {
 }
 getAuthorName(authorName: any): string {
   if (Array.isArray(authorName)) {
-    return authorName[0]; // Restituisce il primo elemento dell'array se authorName è un array
+    return authorName[0];
   } else {
-    return authorName; // Restituisce la forma primaria se authorName non è un array
+    return authorName;
   }
 }
 }

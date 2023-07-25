@@ -31,13 +31,11 @@
               "./node_modules/flag-icon-css/css/flag-icons.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
-
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-                "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-              ]
-
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -100,13 +98,28 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverage": true
+          }
+        },
+        "lint": {
+
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

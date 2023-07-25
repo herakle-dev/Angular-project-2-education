@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, finalize, map, takeUntil } from 'rxjs';
+import { Observable, Subject, finalize,  takeUntil } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,8 @@ import { Observable, Subject, finalize, map, takeUntil } from 'rxjs';
 export class SearchBarService {
   constructor(
     private http: HttpClient,
-    private paginationService: PaginationService,
-    private router: Router
+    public paginationService: PaginationService,
+    public router: Router
   ) {
     this.limit = 50;
   }
@@ -30,13 +30,13 @@ export class SearchBarService {
   selectedOption = new FormControl('');
   languageInput = new FormControl('');
 
-  limit: number = 50;
-  offset: number = 0;
+  limit = 50;
+  offset = 0;
   //array
   responseArray!: any[];
   searchvar = false;
   private isRequestInProgress = false;
-  private cancelSignal$ = new Subject<void>();
+   cancelSignal$ = new Subject<void>();
 
   cancelRequests() {
     this.cancelSignal$.next();
@@ -91,7 +91,7 @@ export class SearchBarService {
       finalize(() => {
         this.isRequestInProgress = false;
       })
-    );;
+    );
   }
 
   fetchResultsWithOffset(
@@ -99,19 +99,17 @@ export class SearchBarService {
     limit: number,
     offset: number
   ): Observable<any> {
-    // console.log(this.apiUrl);
     const url = `home/search/${this.languageInput.value}∼/${
       this.selectedOption.value
     }/${this.textInput.value}/${this.paginationService.currentPage + 1}`;
     this.router.navigate([url]);
 
-    //  console.log(url)
     return this.http.get(this.apiUrl).pipe(
       takeUntil(this.cancelSignal$),
       finalize(() => {
         this.isRequestInProgress = false;
       })
-    );;
+    );
   }
 
   setArrayToShow(array: any) {

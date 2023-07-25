@@ -16,7 +16,9 @@
     <div class=" col-lg-5">
       <h2>{{ authorInfo.name }}</h2>
       <p *ngIf="!isObject(authorInfo.bio)">{{ authorInfo.bio }}</p>
-      <p *ngIf="authorInfo.bio.value">{{ authorInfo.bio.value }}</p>
+      <p *ngIf="authorInfo.bio">{{ authorInfo.bio.value }}</p>
+      <p *ngIf="!authorInfo.bio">Nessuna biografia disponibile per {{authorInfo.name}}</p>
+
       <p *ngIf="authorInfo.birth_date">
         Data di nascita: <strong>{{ authorInfo.birth_date }}</strong>
       </p>
@@ -25,6 +27,4 @@
       </p>
     </div>
   </div>
-
-
 </div>

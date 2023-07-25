@@ -11,7 +11,7 @@ import { AuthorDetailsService } from '../author-details/author-details.service';
   styleUrls: ['./home-trending.component.css'],
 })
 export class HomeTrendingComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject<void>();
+  public ngUnsubscribe = new Subject<void>();
 
   constructor(
     private homeService: HomeTrendingService,
@@ -19,7 +19,7 @@ export class HomeTrendingComponent implements OnInit, OnDestroy {
     public authorDetailsService:AuthorDetailsService
   ) {}
 
-  time: string = 'now';
+  time = 'now';
   itemResponseByTime: any[] = [];
 
   ngOnInit(): void {
@@ -32,14 +32,12 @@ export class HomeTrendingComponent implements OnInit, OnDestroy {
   }
 
   trending() {
-    // Annulla le richieste correnti prima di fare una nuova richiesta
     this.homeService.cancelRequests();
 
     this.homeService.fetchTrending(this.time)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response) => {
         this.itemResponseByTime = response.works;
-        // console.log(response);
       });
   }
 

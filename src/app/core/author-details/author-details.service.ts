@@ -13,16 +13,13 @@ export class AuthorDetailsService {
     if (typeof title === 'string') {
       title = title.replace(/\s/g, '_');
     } else if (Array.isArray(title)) {
-      // console.log(title, 'premap')
 
       title = title .map((item) => item.replace(/\s/g, '_'));
-      // console.log(title,'postmap')
     }
 
     this.itemDetailsService.setKey(key);
     const url =`home/details/author/${title}`
     this.router.navigate([url]);
-// console.log(url)
 
   }
 }
